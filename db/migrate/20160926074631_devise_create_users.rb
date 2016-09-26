@@ -8,7 +8,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
       t.string :cell_phone_number,  null: false, default: ""
       t.string :home_phone_number
       t.string :line_id
-      t.string :type,               null: false
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 

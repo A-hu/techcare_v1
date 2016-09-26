@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926074631) do
+ActiveRecord::Schema.define(version: 20160926090356) do
+
+  create_table "caregivers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "introduction"
+    t.text     "experience"
+    t.text     "skill"
+    t.string   "licence_number"
+    t.date     "licence_offdate"
+    t.string   "training"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["user_id"], name: "index_caregivers_on_user_id", unique: true
+  end
+
+  create_table "requesters", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "address"
+    t.text     "condition_description"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["user_id"], name: "index_requesters_on_user_id", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",             default: "", null: false
@@ -19,7 +41,6 @@ ActiveRecord::Schema.define(version: 20160926074631) do
     t.string   "cell_phone_number",      default: "", null: false
     t.string   "home_phone_number"
     t.string   "line_id"
-    t.string   "type",                                null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -32,6 +53,10 @@ ActiveRecord::Schema.define(version: 20160926074631) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
