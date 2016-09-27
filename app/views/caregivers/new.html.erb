@@ -1,0 +1,9 @@
+<%= form_for @caregiver do |f| %>
+
+  <%= render partial: 'form', locals: {f: f} %>
+  <div class="field">
+    <br>
+    <%= f.submit "送出表單", class: "btn btn-info"%>
+  </div> 
+
+<% end %>

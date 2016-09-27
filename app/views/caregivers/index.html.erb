@@ -1,0 +1,41 @@
+<h1>Caregiver index</h1>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>編輯居服員相關資料</th>
+			<th>姓</th>
+			<th>名</th>
+			<th>性別</th>
+			<th>電話</th>
+			<th>Email</th>
+			<th>自我介紹</th>
+			<th>經歷</th>
+			<th>專長</th>
+			<th>證書字號</th>
+			<th>證書到期日</th>
+			<th>訓練機構</th>
+			<th>註冊時間</th>
+			<th>刪除</th>	
+		</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<% @caregivers.each do |caregiver|%>
+			<td><%= link_to "編輯", edit_caregiver_path(caregiver), class: "btn btn-default"%></td>	
+			<td><%= caregiver.user.last_name %></td>
+			<td><%= caregiver.user.first_name %></td>
+			<td><%= caregiver.user.gender %></td>
+			<td><%= caregiver.user.cell_phone_number %></td>
+			<td><%= caregiver.user.email %></td>
+			<td><%= caregiver.introduction %></td>
+			<td><%= caregiver.experience %></td>
+			<td><%= caregiver.skill %></td>
+			<td><%= caregiver.licence_number %></td>
+			<td><%= caregiver.licence_offdate %></td>
+			<td><%= caregiver.training %></td>
+			<td><%= caregiver.user.created_at %></td>
+			<td><%= link_to "刪除", caregiver_path(caregiver), method: :delete, class: "btn btn-danger"%></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
