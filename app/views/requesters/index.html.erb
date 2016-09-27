@@ -1,0 +1,33 @@
+<h1>Requester index</h1>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>編輯居服員相關資料</th>
+			<th>姓</th>
+			<th>名</th>
+			<th>性別</th>
+			<th>電話</th>
+			<th>Email</th>
+			<th>狀態簡述</th>
+			<th>地址</th>
+			<th>註冊時間</th>
+			<th>刪除</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<% @requesters.each do |requester|%>
+			<td><%= link_to "編輯", edit_requester_path(requester), class: "btn btn-default"%></td>	
+			<td><%= requester.user.last_name %></td>
+			<td><%= requester.user.first_name %></td>
+			<td><%= requester.user.gender %></td>
+			<td><%= requester.user.cell_phone_number %></td>
+			<td><%= requester.user.email %></td>
+			<td><%= requester.condition_description %></td>
+			<td><%= requester.address %></td>
+			<td><%= requester.user.created_at %></td>
+			<td><%= link_to "刪除", requester_path(requester), method: :delete, class: "btn btn-danger"%></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
