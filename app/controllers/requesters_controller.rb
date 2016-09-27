@@ -3,7 +3,7 @@ class RequestersController < ApplicationController
 	before_action :find_requester, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@requesters = Requester.all
+		@requesters = Requester.page( params[:page] ).per(10)
 	end
 
 	def show

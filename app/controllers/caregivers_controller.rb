@@ -3,7 +3,7 @@ class CaregiversController < ApplicationController
 	before_action :find_caregiver, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@caregivers = Caregiver.all
+		@caregivers = Caregiver.page( params[:page] ).per(10)
 	end
 
 	def show
