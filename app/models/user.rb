@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates_presence_of :first_name, :last_name, :cell_phone_number, :email
+
   has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "blank.png"
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
 
