@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927035944) do
+ActiveRecord::Schema.define(version: 20160928044050) do
 
   create_table "caregivers", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 20160927035944) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.index ["user_id"], name: "index_requesters_on_user_id", unique: true
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "caregiver_id",   null: false
+    t.date     "scheduled_date", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["caregiver_id"], name: "index_schedules_on_caregiver_id"
   end
 
   create_table "users", force: :cascade do |t|
