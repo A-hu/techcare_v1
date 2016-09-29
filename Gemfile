@@ -42,8 +42,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 group :production do 
-	gem 'pg'
-  gem 'rails_12factor'
+  gem "mysql2"
 end
 
 group :development, :test do
@@ -64,6 +63,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'sqlite3'
   gem 'faker'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
