@@ -5,20 +5,27 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+a = 0
 20.times {
+	a += 1
 	u = User.create(first_name: Faker::Name.first_name,
 							last_name:  Faker::Name.last_name,
 							cell_phone_number: Faker::PhoneNumber.cell_phone,
 							email: Faker::Internet.free_email,
 							password: "123123"
 							)
-	u.create_caregiver(introduction: Faker::Lorem.sentence,
-										experience: Faker::Lorem.sentence,
-										skill: Faker::Pokemon.name,
-										licence_number: Faker::Number.number(10),
-										licence_offdate: Faker::Date.forward(500),
-										training: Faker::Pokemon.location
-										)
+		c = u.create_caregiver(introduction: Faker::Lorem.sentence,
+											experience: Faker::Lorem.sentence,
+											skill: Faker::Pokemon.name,
+											licence_number: Faker::Number.number(10),
+											licence_offdate: Faker::Date.forward(500),
+											training: Faker::Pokemon.location
+											)
+			s = c.schedules.create(scheduled_date: Faker::Date.forward(7))			
+				s.events.create(requester_id: a, event_name: Faker::Pokemon.name, time_zone: "0900")
+				s.events.create(requester_id: a, event_name: Faker::Pokemon.name, time_zone: "1200")
+				s.events.create(requester_id: a, event_name: Faker::Pokemon.name, time_zone: "1800")
+
 				}
 
 20.times {
