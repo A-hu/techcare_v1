@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929081125) do
+ActiveRecord::Schema.define(version: 20161002083548) do
 
   create_table "caregivers", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(version: 20160929081125) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",             default: "",  null: false
-    t.string   "last_name",              default: "",  null: false
+    t.string   "first_name",             default: ""
+    t.string   "last_name",              default: ""
     t.string   "nickname"
-    t.string   "cell_phone_number",      default: "",  null: false
+    t.string   "cell_phone_number",      default: ""
     t.string   "home_phone_number"
     t.string   "line_id"
     t.string   "email",                  default: "",  null: false
