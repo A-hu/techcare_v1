@@ -1,4 +1,5 @@
-class ApiV1::UserController < ApiController
+class ApiV1::AuthController < ApiController
+
   before_action :authenticate_user!, :only => [:logout]
 
   def login
@@ -12,7 +13,10 @@ class ApiV1::UserController < ApiController
     if success
       render :json => { :message => "Ok",
                         :auth_token => user.authentication_token,
-                        :user_id => user.id}
+                        :user_id => user.id,
+                        :caregiver_id => user.caregiver.try(:id),
+                        :requester_id => user.requester.try(:id)
+                      }
     else
       render :json => { :message => "Email or Password is wrong" }, :status => 401
     end
