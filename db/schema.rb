@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929081125) do
+ActiveRecord::Schema.define(version: 20161002131352) do
 
   create_table "caregivers", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(version: 20160929081125) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",             default: "",  null: false
-    t.string   "last_name",              default: "",  null: false
+    t.string   "first_name",             default: ""
+    t.string   "last_name",              default: ""
     t.string   "nickname"
-    t.string   "cell_phone_number",      default: "",  null: false
+    t.string   "cell_phone_number",      default: ""
     t.string   "home_phone_number"
     t.string   "line_id"
     t.string   "email",                  default: "",  null: false
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20160929081125) do
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.string   "gender",                 default: "F"
+    t.string   "authentication_token"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
