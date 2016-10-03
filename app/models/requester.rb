@@ -4,4 +4,8 @@ class Requester < ApplicationRecord
 
 	belongs_to :user
 	has_many :events, dependent: :destroy
+
+	has_many :caregiver_requester_relationships, dependent: :destroy
+	has_many :caregivers, through: :caregiver_requester_relationships, dependent: :destroy
+
 end

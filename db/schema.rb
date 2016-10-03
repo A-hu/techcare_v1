@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002131352) do
+ActiveRecord::Schema.define(version: 20161003025628) do
+
+  create_table "caregiver_requester_relationships", force: :cascade do |t|
+    t.integer  "caregiver_id"
+    t.integer  "requester_id"
+    t.integer  "status",       default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["caregiver_id"], name: "index_caregiver_requester_relationships_on_caregiver_id"
+    t.index ["requester_id"], name: "index_caregiver_requester_relationships_on_requester_id"
+  end
 
   create_table "caregivers", force: :cascade do |t|
     t.integer  "user_id",         null: false
