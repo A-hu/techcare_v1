@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002131352) do
+ActiveRecord::Schema.define(version: 20161003035622) do
+
+  create_table "caregiver_requester_relationships", force: :cascade do |t|
+    t.integer  "caregiver_id"
+    t.integer  "requester_id"
+    t.integer  "status",       default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["caregiver_id"], name: "index_caregiver_requester_relationships_on_caregiver_id"
+    t.index ["requester_id"], name: "index_caregiver_requester_relationships_on_requester_id"
+  end
 
   create_table "caregivers", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -23,6 +33,15 @@ ActiveRecord::Schema.define(version: 20161002131352) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["user_id"], name: "index_caregivers_on_user_id", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
   end
 
   create_table "events", force: :cascade do |t|
