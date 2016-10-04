@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003133217) do
+ActiveRecord::Schema.define(version: 20161004045646) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -42,6 +42,29 @@ ActiveRecord::Schema.define(version: 20161003133217) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+  end
+
+  create_table "demand_categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "demands", force: :cascade do |t|
+    t.integer  "demand_category_id"
+    t.string   "demand_name"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["demand_category_id"], name: "index_demands_on_demand_category_id"
+  end
+
+  create_table "event_demandships", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "demand_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["demand_id"], name: "index_event_demandships_on_demand_id"
+    t.index ["event_id"], name: "index_event_demandships_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
