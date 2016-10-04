@@ -1,0 +1,2 @@
+class TimeEventship < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003035622) do
+ActiveRecord::Schema.define(version: 20161003133217) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 20161003035622) do
     t.integer  "schedule_id",                  null: false
     t.integer  "requester_id",                 null: false
     t.string   "event_name"
-    t.string   "time_zone"
     t.boolean  "push",         default: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
@@ -71,6 +70,22 @@ ActiveRecord::Schema.define(version: 20161003035622) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["caregiver_id"], name: "index_schedules_on_caregiver_id"
+  end
+
+  create_table "time_eventships", force: :cascade do |t|
+    t.integer  "time_zone_id"
+    t.integer  "event_id"
+    t.string   "service",      default: "off"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["event_id"], name: "index_time_eventships_on_event_id"
+    t.index ["time_zone_id"], name: "index_time_eventships_on_time_zone_id"
+  end
+
+  create_table "time_zones", force: :cascade do |t|
+    t.string   "zone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
