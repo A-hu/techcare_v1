@@ -3,4 +3,11 @@ class Event < ApplicationRecord
 
 	belongs_to :schedule
 	belongs_to :requester
+
+	has_many :time_eventships, dependent: :destroy
+	has_many :time_zones, through: :time_eventships, dependent: :destroy
+
+	has_many :event_demandships, dependent: :destroy
+	has_many :demands, through: :event_demandships, dependent: :destroy
+
 end
