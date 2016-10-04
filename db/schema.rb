@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004045646) do
+ActiveRecord::Schema.define(version: 20161004064428) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -35,12 +35,20 @@ ActiveRecord::Schema.define(version: 20161004045646) do
     t.index ["user_id"], name: "index_caregivers_on_user_id", unique: true
   end
 
+  create_table "comment_categaries", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text     "content"
     t.string   "commentable_type"
     t.integer  "commentable_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "comment_category_id"
+    t.index ["comment_category_id"], name: "index_comments_on_comment_category_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
   end
 
@@ -136,6 +144,7 @@ ActiveRecord::Schema.define(version: 20161004045646) do
     t.datetime "picture_updated_at"
     t.string   "gender",                 default: "F"
     t.string   "authentication_token"
+    t.integer  "age"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
