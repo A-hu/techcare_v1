@@ -92,5 +92,15 @@ namespace :init do
 			d6.demands.create(demand_name: "閱讀書報")
 		d7 = DemandCategory.create(name: "其他服務")
 	end
+
+	task medication_time: :environment do
+		MedicationTime.create(name: "早餐飯前")
+		MedicationTime.create(name: "早餐飯後")
+		MedicationTime.create(name: "午餐飯前")
+		MedicationTime.create(name: "午餐飯後")
+		MedicationTime.create(name: "晚餐飯前")
+		MedicationTime.create(name: "晚餐飯後")
+		MedicationTime.create(name: "睡前")
+	end
 	
 end
