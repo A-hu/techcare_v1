@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004092633) do
+ActiveRecord::Schema.define(version: 20161005024132) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(version: 20161004092633) do
     t.integer  "blood_sugar"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "caregiver_id"
+    t.date     "record_day"
     t.index ["requester_id"], name: "index_health_records_on_requester_id"
   end
 
