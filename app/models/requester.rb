@@ -7,9 +7,10 @@ class Requester < ApplicationRecord
 
 	has_many :comments, as: :commentable, dependent: :destroy
 
-	has_many :caregiver_requester_relationships, dependent: :destroy
-	has_many :caregivers, through: :caregiver_requester_relationships, dependent: :destroy
+	has_many :health_records, dependent: :destroy
+	has_many :caregivers, through: :health_records, dependent: :destroy
 
 	has_many :medications, dependent: :destroy
+	
 	has_many :health_records, dependent: :destroy
 end

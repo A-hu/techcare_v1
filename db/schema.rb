@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004073047) do
+ActiveRecord::Schema.define(version: 20161005024132) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -94,7 +94,15 @@ ActiveRecord::Schema.define(version: 20161004073047) do
     t.integer  "blood_sugar"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "caregiver_id"
+    t.date     "record_day"
     t.index ["requester_id"], name: "index_health_records_on_requester_id"
+  end
+
+  create_table "medication_times", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "medications", force: :cascade do |t|
@@ -106,6 +114,7 @@ ActiveRecord::Schema.define(version: 20161004073047) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+    t.integer  "time_id"
     t.index ["requester_id"], name: "index_medications_on_requester_id"
   end
 
