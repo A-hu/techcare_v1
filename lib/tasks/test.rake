@@ -14,9 +14,8 @@ namespace :test do
 		u6 = User.create(first_name: "五", last_name: "王", cell_phone_number: "0933245673", email: "elder@hotmail.com", password: "123123")
 			r3 = u6.create_requester(address: "台南", condition_description: "年老")
 
-
-			caregivers = Caregiver.all
-			requesters = Requester.all
+		caregivers = Caregiver.all
+		requesters = Requester.all
 		for i in 0...3
 			for j in 1..30
 				h = HealthRecord.new
@@ -27,9 +26,5 @@ namespace :test do
 		end
 	
 	end
-
-	task requester: :environment do
-end
-
 
 end
