@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     post "/login" => "auth#login"
     post "/logout" => "auth#logout"
 
+    resources :schedules do
+    	resources :events
+    end
+
   end
 
 end

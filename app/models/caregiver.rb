@@ -8,6 +8,9 @@ class Caregiver < ApplicationRecord
 
 	has_many :comments, as: :commentable, dependent: :destroy
 
+	has_many :orders, dependent: :destroy
+	has_many :order_requesters, through: :orders, source: :requester, dependent: :destroy
+
 	has_many :health_records, dependent: :destroy
 	has_many :requesters, through: :health_records, dependent: :destroy
 end
