@@ -11,11 +11,10 @@ class ApiV1::AuthController < ApiController
     end
 
     if success
-      render :json => { :message => "Ok",
-                        :auth_token => user.authentication_token,
-                        :user_id => user.id,
-                        :caregiver_id => user.caregiver.try(:id),
-                        :requester_id => user.requester.try(:id)
+      render :json => { 
+                        status:     "100",
+                        message:    "Ok",
+                        auth_token: user.authentication_token,
                       }
     else
       render :json => { :message => "Email or Password is wrong" }, :status => 401
