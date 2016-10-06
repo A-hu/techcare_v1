@@ -3,7 +3,7 @@ class CreateOrders < ActiveRecord::Migration[5.0]
     create_table :orders do |t|
     	t.integer :caregiver_id
     	t.integer :requester_id
-    	t.string :status
+    	t.string :status, default: "Offservice"
 
       t.timestamps
     end

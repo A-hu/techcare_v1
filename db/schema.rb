@@ -121,9 +121,9 @@ ActiveRecord::Schema.define(version: 20161006014135) do
   create_table "orders", force: :cascade do |t|
     t.integer  "caregiver_id"
     t.integer  "requester_id"
-    t.string   "status"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "status",       default: "Offservice"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.index ["caregiver_id"], name: "index_orders_on_caregiver_id"
     t.index ["requester_id"], name: "index_orders_on_requester_id"
   end
