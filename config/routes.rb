@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
 		# match '/schedules' => 'schedules#show', :via => :get
 		get '/requesterList' => 'schedules#show'
+		get '/itemsList' => 'items#show'
 
     resources :schedules do
     	resources :events
