@@ -1,5 +1,7 @@
 class ApiV1::EventsController < ApiController
 
+  before_action :authenticate_user!
+
 	before_action :find_date
 	before_action :find_event, only: [:show, :edit, :update, :destroy]
 

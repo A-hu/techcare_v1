@@ -1,6 +1,6 @@
 class ApiV1::OrdersController < ApiController
 
-	before_action :authenticate_user!
+  before_action :authenticate_user!
 
 	def index
 		@orders = Order.all

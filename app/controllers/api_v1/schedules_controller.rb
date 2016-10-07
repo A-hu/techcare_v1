@@ -1,5 +1,7 @@
 class ApiV1::SchedulesController < ApiController
 
+  before_action :authenticate_user!
+
 	def index
 		@schedules = Schedule.all
 		render json: @schedules.to_json
