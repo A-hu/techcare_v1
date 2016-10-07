@@ -22,9 +22,9 @@ a = 0
 											training: Faker::Pokemon.location
 											)
 			s = c.schedules.create(scheduled_date: Faker::Date.forward(7))			
-				s.events.create(requester_id: a, event_name: Faker::Pokemon.name, time_zone: "0900")
-				s.events.create(requester_id: a, event_name: Faker::Pokemon.name, time_zone: "1200")
-				s.events.create(requester_id: a, event_name: Faker::Pokemon.name, time_zone: "1800")
+				s.events.create(requester_id: a, event_name: Faker::Pokemon.name)
+				s.events.create(requester_id: a, event_name: Faker::Pokemon.name)
+				s.events.create(requester_id: a, event_name: Faker::Pokemon.name)
 
 				}
 
