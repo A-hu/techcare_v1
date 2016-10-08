@@ -1,6 +1,6 @@
 namespace :init do 
 
-	task all: [:time_data, :comment_category, :demand_category, :medication_time]
+	task :all => [:time_data, :comment_category, :demand_category, :medication_time]
 
 	task time_data: :environment do
 		TimeZone.create(zone: "0000")
