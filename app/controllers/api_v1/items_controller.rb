@@ -10,4 +10,16 @@ class ApiV1::ItemsController < ApiController
 		end
 	end
 
+	def create
+		
+	end
+
+	def update
+		
+	end
+
+	def destroy
+		
+	end
+
 end
