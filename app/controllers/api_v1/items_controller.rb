@@ -11,23 +11,18 @@ class ApiV1::ItemsController < ApiController
 	end
 
 	def create
-		fails = []
-		data = JSON.parse( params[:items_data] )
-		data["items_data"].each do |item|
-			schedule = Schedule.create( scheduled_date: params[:care_date], caregiver_id: current_user.caregiver.id )
-			event = schedule.events.create( requester_id: params[:requester_id], push: item["important"])
-			event.time_zone = TimeZone.find_by_zone(item["operation_time"])
-			unless event.save
-				fails << event.demands
-			end
+		
+		schedule = current_user.caregiver.schedules.find_by( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
+
+		if schedule.present?
+			has_fails = create_event(schedule, params[:items_data])
+		else
+			schedule = current_user.caregiver.schedules.create( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
+			has_fails = create_event(schedule, params[:items_data])
 		end
 
-		if fails == []
-			render json: { status: "200", message: "OK", }, status: 200
-		else
-			render json: { message: "Fail", fails: fails }, status: 400
-		end
-		# items_data={"items_data" : [{"item_id" : "18273","operation_time" : "09:00","important" : "Y"},{"item_id" : "18274","operation_time" : "10:00","important" : "N"}]}
+		has_fails == [] ? (render json: { status: "200", message: "OK" }, status: 200) : (render json: { message: "Fail", fails: has_fails }, status: 400)
+
 	end
 
 	def update
@@ -42,6 +37,20 @@ class ApiV1::ItemsController < ApiController
 
 	def set_params
 		params.require(:event).permit(:requester_id, :scheduled_date, :push)
+	end
+
+	def create_event(schedule, raw_data)
+		has_fails = []
+		data = JSON.parse( raw_data )
+		data["items_data"].each do |item|
+			t = TimeZone.find_by_zone(item["operation_time"])
+			if schedule.events.find_by_time_zone_id(t.id).present?
+				has_fails << "#{item["operation_time"]} is already booked."
+			else
+				schedule.events.create( push: item["important"], time_zone_id: t.id)
+			end
+		end
+		has_fails
 	end
 
 end

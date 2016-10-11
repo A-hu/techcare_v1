@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011041451) do
+ActiveRecord::Schema.define(version: 20161011074211) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 20161011041451) do
     t.integer  "requester_id"
     t.index ["caregiver_id"], name: "index_schedules_on_caregiver_id"
     t.index ["requester_id"], name: "index_schedules_on_requester_id"
+    t.index ["scheduled_date", "requester_id"], name: "index_schedules_on_scheduled_date_and_requester_id", unique: true
   end
 
   create_table "time_eventships", force: :cascade do |t|
