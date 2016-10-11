@@ -3,23 +3,25 @@
 <table class="table table-bordered">	
 <tr>
 	<th></th>
-<% @schedules.each do |s| %>
-	<th class= "text-center"><%= s.scheduled_date %></th>
+<% @schedule_dates.each do |d| %>
+	<th class= "text-center"><%= d %></th>
 <% end %>
 </tr>
 
 <% TimeZone.all.each do |t| %>
-	<% if t.event.try(:schedule).try(:caregiver) == @caregiver %>
+	<% if @timezones.include?(t) %>
 	<tr>
 		<td style="font-weight:bold"><%= t.zone  %></td>
-		<% @schedules.each do |s| %> 
+		<% @schedule_dates.each do |d| %> 
 			<td>
-			<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
-				<%= e.try(:requester).try(:user).try(:first_name)	 %><br>
-				<% e.try(:demands).try(:each) do |d| %>
-					<%= d.demand_name %><br>
-				<% end %>		
-			<% end %>	
+			<% @schedules.where(:scheduled_date => d).each do |s| %>
+				<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
+				<%= e.schedule.try(:requester).try(:user).try(:first_name)	 %><br>
+					<% e.try(:demands).try(:each) do |d| %>
+						<%= d.demand_name %><br>
+					<% end %>		
+				<% end %>	
+			<% end %>
 			</td>
 		<% end %>		
 	</tr>	
@@ -27,23 +29,6 @@
 <% end %>
 
 </table>	
-
-<!--
-<% @schedules.each do |s| %>
-<table>	
-	<td>
-	<%= s.scheduled_date %>
-	</td>
-	<% s.events.each do |e| %>
-		<td><%= e.requester.user.first_name %></td>
-		<td><%= e.time_zone.zone %></td>
-		<% e.demands.each do |d| %>
-			<td><%= d.demand_name %></td>
-		<% end %>
-	<% end %>
-</table>	
-<% end %>
--->
 
 <% @requesters.each do |r| %>
 	<%= r.user.first_name %>

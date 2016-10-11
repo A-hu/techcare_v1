@@ -3,27 +3,26 @@
 <table class="table table-bordered">	
 <tr>
 	<th></th>
-<% @schedules.each do |s| %>
-	<th class= "text-center"><%= s.scheduled_date %></th>
+<% @schedule_dates.each do |d| %>
+	<th class= "text-center"><%= d %></th>
 <% end %>
 </tr>
 
 <% TimeZone.all.each do |t| %>
-	<% if t.event.try(:schedule).try(:caregiver) == @caregiver and t.event.try(:requester)==@requester %>
+<%# if t.event.try(:schedule).try(:caregiver) == @caregiver and t.event.try(:requester)==@requester %>
+	<% if @timezones.include?(t) %>
 	<tr>
 		<td style="font-weight:bold"><%= t.zone  %></td>
-		<% @schedules.each do |s| %> 
+		<% @schedule_dates.each do |d| %> 
 			<td>
-			<% Event.where(:schedule => s, :time_zone => t).each do |e| %>			 
-				<%= e.try(:requester).try(:user).try(:first_name)	 %>
-				<br>
-				<%= e.caregiver_confirm %>
-				<%= e.requester_confirm %>
-				<br>
-				<% e.try(:demands).try(:each) do |d| %>
-					<%= d.demand_name %><br>
+			<% @schedules.where(:scheduled_date => d).each do |s| %>
+				<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
+				<%= e.schedule.try(:requester).try(:user).try(:first_name)	 %><br>
+					<% e.try(:demands).try(:each) do |d| %>
+						<%= d.demand_name %><br>
+					<% end %>		
 				<% end %>	
-			<% end %>	
+			<% end %>
 			</td>
 		<% end %>		
 	</tr>	
@@ -31,12 +30,15 @@
 <% end %>
 	<tr>
 		<td style="font-weight:bold">comment</td>
-		<% @schedules.each do |s| %>
-	  <td><% s.comments.each do |c|%>
-					<%=	c.comment_category.name %>
-					<%=	c.content %>
-	  	  <% end %>
-	  </td>	  
+		<% @schedule_dates.each do |d| %>
+		  <td>
+				<% @schedules.where(:scheduled_date => d).each do |s| %>
+			  	<% s.comments.each do |c|%>
+						<%=	c.comment_category.name %>
+						<%=	c.content %>
+			  	 <% end %>
+			 </td>	
+			<% end %>    
 		<% end %>
 	</tr>
 
