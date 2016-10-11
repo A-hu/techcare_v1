@@ -6,12 +6,16 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="/assets/c3.css" rel="stylesheet" type="text/css">
+    <script src="/assets/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/assets/c3.min.js"></script>
   </head>
 
   <body>
+  <div class="container">
   	<p style="color: green"><%= flash[:notice] %></p>
     <p style="color: red"><%= flash[:alert] %></p>
-
+    <div class="nav pull-right clearfix">
     <% if current_user %>
 	    <%= link_to('登出', destroy_user_session_path, :method => :delete) %> |
 	    <%= link_to('修改會員基本資料', edit_registration_path(:user)) %>
@@ -19,7 +23,9 @@
 	    <%= link_to('註冊', new_registration_path(:user)) %> |
 	    <%= link_to('登入', new_session_path(:user)) %>
 	  <% end %>
+    </div>
     <%= yield %>
     <%= link_to "回首頁", root_path, class: "btn btn-default center-block", style: "width: 10%"%>
+  </div>  
   </body>
 </html>
