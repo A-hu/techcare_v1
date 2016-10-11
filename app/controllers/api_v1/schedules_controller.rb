@@ -8,8 +8,8 @@ class ApiV1::SchedulesController < ApiController
 	end
 
 	def show
-		if params[:query_date]
-			schedule = current_user.caregiver.schedules.find_by_scheduled_date(params[:query_date])
+		if params[:care_date].present?
+			schedule = current_user.caregiver.schedules.find_by_scheduled_date(params[:care_date])
 			@requesters = schedule.events.map{|e| e.requester }.uniq
 			# render json: { message: "OK" }
 		else

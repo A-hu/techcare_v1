@@ -12,14 +12,12 @@ Rails.application.routes.draw do
     post "/logout" => "auth#logout"
 
 		# match '/schedules' => 'schedules#show', :via => :get
-		get '/requesterList' => 'schedules#show'
-		get '/itemsList' => 'items#show'
+		post '/requesterList' => 'schedules#show'
+		post '/itemsList'     => 'items#show'
 
-    resources :schedules do
-    	resources :events
-    end
-
-    resources :orders
+    post '/setItems'      => 'items#create'
+    post '/updateItem'    => 'items#complete'
+    post '/itemHistory'   => 'healthcare#show'
 
   end
 
