@@ -7,6 +7,9 @@ class Requester < ApplicationRecord
 
 	has_many :comments, as: :commentable, dependent: :destroy
 
+	has_many :schedules, dependent: :destroy
+	has_many :scheduled_caregivers, through: :schedules, source: :caregiver, dependent: :destroy
+
 	has_many :orders, dependent: :destroy
 	has_many :ordered_caregivers, through: :orders, source: :caregiver, dependent: :destroy
 
