@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 		post '/itemsList'     => 'items#show'
 
     post '/setItems'      => 'items#create'
-    post '/updateItem'    => 'items#update'
+    post '/updateItem'    => 'items#complete'
     post '/itemHistory'   => 'healthcare#show'
 
   end

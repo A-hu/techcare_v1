@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011074211) do
+ActiveRecord::Schema.define(version: 20161011113604) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
     t.integer  "caregiver_id"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20161011074211) do
     t.integer  "time_zone_id"
     t.boolean  "caregiver_confirm", default: false
     t.boolean  "requester_confirm", default: false
+    t.string   "complete_time"
     t.index ["schedule_id"], name: "index_events_on_schedule_id"
     t.index ["time_zone_id"], name: "index_events_on_time_zone_id"
   end
