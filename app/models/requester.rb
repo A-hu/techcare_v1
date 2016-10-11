@@ -16,4 +16,39 @@ class Requester < ApplicationRecord
 	has_many :medications, dependent: :destroy
 	
 	has_many :health_records, dependent: :destroy
+
+	def systolic
+		arr = []
+		self.health_records.each do |h|
+			arr << h.systolic_record
+		end
+		# arr.unshift("systolic")
+		return arr
+	end
+
+	def diastolic
+		arr = []
+		self.health_records.each do |h|
+			arr << h.diastolic_record
+		end
+		# arr.unshift("diastolic")
+		return arr
+	end
+
+	def heart_rates
+		arr = []
+		self.health_records.each do |h|
+			arr << h.heart_rate
+		end
+		# arr.unshift("diastolic")
+		return arr
+	end
+
+	def rec_day
+		arr = []
+		self.health_records.each do |h|
+			arr << h.record_day
+		end
+		return arr
+	end
 end

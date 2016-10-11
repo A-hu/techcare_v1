@@ -1,0 +1,79 @@
+<!-- @requester.health_records.each do |h|
+	h.
+end -->
+<h1><%= @requester.user.first_name %>健康資料</h1>
+
+<h2 class="text-center">血壓</h2>
+	<div id="chart1">
+		
+	</div>
+
+<h2 class="text-center">心跳</h2>
+<div id="chart2">
+	
+</div>
+
+
+
+<script>
+	var arr1= <%= @requester.systolic %>
+	arr1.unshift("systolic")
+	var arr2= <%= @requester.diastolic %>
+	arr2.unshift("diastolic")
+	var arr3 = <%= @requester.rec_day.to_json.html_safe %>
+	arr3.unshift("x")
+	var chart = c3.generate({
+	    bindto: '#chart1',
+	    data: {
+	    	x: 'x',
+	      columns: [
+	      arr3, 
+	      arr1,
+	      arr2
+	      ],
+	      onclick: function (d, i) { 
+	      	date = new Date(d.x);
+	      	var newDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()
+	      	console.log(newDate)
+	    		window.location.href = "/schedules"+ "/<%= @requester.id %>/"+newDate
+	      },
+	    },
+	    axis: {
+	        x: {
+	            type: 'timeseries',
+	            tick: {
+	                format: '%Y-%m-%d'
+	            }
+	        }
+	    }
+	});
+
+	var arr4= <%= @requester.heart_rates %>
+	arr4.unshift("heart rate")
+	var chart = c3.generate({
+	    bindto: '#chart2',
+	    data: {
+	    	x: 'x',
+	      columns: [
+	      arr3, 
+	      arr4
+	      ],
+	      onclick: function (d, i) { 
+	      	date = new Date(d.x);
+	      	var newDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()
+	      	console.log(newDate)
+	    		window.location.href = "/schedules"+ "/<%= @requester.id %>/"+newDate
+	      },
+	    },
+	    axis: {
+	        x: {
+	            type: 'timeseries',
+	            tick: {
+	                format: '%Y-%m-%d'
+	            }
+	        }
+	    }
+	});
+
+
+</script>
