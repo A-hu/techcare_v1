@@ -8,6 +8,10 @@ class Caregiver < ApplicationRecord
 
 	has_many :comments, as: :commentable, dependent: :destroy
 
+	has_many :schedules, dependent: :destroy
+	has_many :scheduled_requesters, through: :schedules, source: :requester, dependent: :destroy
+
+
 	has_many :orders, dependent: :destroy
 	has_many :order_requesters, through: :orders, source: :requester, dependent: :destroy
 
