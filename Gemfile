@@ -10,6 +10,7 @@ gem "select2-rails"
 gem 'bootstrap-datepicker-rails'
 gem "paperclip"
 gem "rails-i18n"
+gem "letter_opener", :group => :development
 
 gem 'ruby-graphviz'
 gem "rails-erd"
