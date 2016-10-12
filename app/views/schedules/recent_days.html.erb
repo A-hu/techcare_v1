@@ -9,7 +9,6 @@
 </tr>
 
 <% TimeZone.all.each do |t| %>
-<%# if t.event.try(:schedule).try(:caregiver) == @caregiver and t.event.try(:requester)==@requester %>
 	<% if @timezones.include?(t) %>
 	<tr>
 		<td style="font-weight:bold"><%= t.zone  %></td>

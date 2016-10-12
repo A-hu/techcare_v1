@@ -11,10 +11,20 @@ class SchedulesController < ApplicationController
 		@caregiver = current_user.caregiver
 		@schedules = @caregiver.schedules.where(:requester => @requester).where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
+		@schedule_ids = @schedules.pluck(:id).uniq
 		@timezones = TimeZone.find(@schedules.includes(:events).pluck(:time_zone_id).uniq)
 		# @schedules = @requester.caregivers.where(:user => current_user).uniq.first.schedules
 		# @schedules = Schedule.includes(:events).where(:requester_id => @requester_id)
 		# @schedules = Schedule.where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days]).find_by_id(@requester.events.includes(:schedule).pluck(:schedule_id))
+	end
+	def update
+		@ids = params[:ids].split
+		@ids.each do |i|
+			if params[i] != nil
+				Schedule.find(i).update(:caregiver_confirmed => params[i])
+			end
+		end
+		redirect_to schedule_path(current_user)	
 	end
 	def recent_days
 		@requester = Requester.find(params[:requester_id])
@@ -24,4 +34,5 @@ class SchedulesController < ApplicationController
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 		@timezones = TimeZone.find(@schedules.includes(:events).pluck(:time_zone_id).uniq)	
 	end
+
 end

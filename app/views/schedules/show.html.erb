@@ -1,5 +1,4 @@
 <h1><%= @requester.user.first_name %>行程</h1>
-
 <table class="table table-bordered">	
 <tr>
 	<th></th>
@@ -9,7 +8,6 @@
 </tr>
 
 <% TimeZone.all.each do |t| %>
-<%# if t.event.try(:schedule).try(:caregiver) == @caregiver and t.event.try(:requester)==@requester %>
 	<% if @timezones.include?(t) %>
 	<tr>
 		<td style="font-weight:bold"><%= t.zone  %></td>
@@ -28,20 +26,67 @@
 	</tr>	
 	<% end %>
 <% end %>
+
+
 	<tr>
-		<td style="font-weight:bold">comment</td>
+		<td style="font-weight:bold">
+		 行程意見
+		<%= form_tag("schedule_path(current_user)", method: :patch ) do %>
+	
+		<%#= form_for @schedules, :url=>schedule_path(current_user) do |f| %>
+		</td>
+		<% @schedule_dates.each do |d| %>
+		  <td>
+				<% @schedules.where(:scheduled_date => d).each do |s| %>
+				<% if s.caregiver_confirmed != nil %>
+			  	<% if s.caregiver_confirmed == true %>
+			  		同意
+			  	<% else %>
+			  		不同意
+			  	<% end %>
+			  	<%#= s.requester_confirmed %>
+			  	<%#= select_tag "confirmed", options_for_select( "y", "n"),:class => "form-control" %>
+				<% else %>
+					<div class="form-group">  
+			  	<%= select_tag s.id,options_for_select([['同意',true],['不同意',false]],s.id),:class => "form-control"  %>
+			  	</div>
+			  <% end %>	
+			
+			  	<%#= select_tag "confirmed","<option>同意</option><option>不同意</option>".html_safe %>
+			  <%#= f.select(:caregiver_confirmed, [['同意',true],['不同意',false]], :class => "form-control") %>		
+
+			 </td>	
+			<% end %>    
+		<% end %>
+		</tr>
+		<%#= f.submit %>		
+		
+
+<div>
+	<tr>
+		<td style="font-weight:bold">留言</td>
 		<% @schedule_dates.each do |d| %>
 		  <td>
 				<% @schedules.where(:scheduled_date => d).each do |s| %>
 			  	<% s.comments.each do |c|%>
-						<%=	c.comment_category.name %>
-						<%=	c.content %>
+						<%=	c.comment_category.name %>:
+						<%=	c.content %><br>
+						by: <%=	User.find(c.user_id).first_name %><br>
 			  	 <% end %>
 			 </td>	
 			<% end %>    
 		<% end %>
 	</tr>
-
+</div>		
 </table>	
-
+	<% if Schedule.find(@schedule_ids).pluck(:caregiver_confirmed).include?(nil) %>
+		<div class="form-group">
+			<%= hidden_field_tag "ids",@schedule_ids  %> 
+			<%= submit_tag "行程確認",:class => "btn btn-default" %>
+		</div>
+	<% end %>
+	<% end %>
+<div>
+<%= link_to "新增留言", new_comment_path,:class =>"btn btn-default" %>
+</div>
 
