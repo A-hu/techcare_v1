@@ -16,15 +16,20 @@ class ApiV1::ItemsController < ApiController
 	def create
 		
 		schedule = current_user.caregiver.schedules.find_by( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
-
+  
 		if schedule.present?
-			has_fails = create_event( schedule, params[:items_data] )
-		else
-			schedule = current_user.caregiver.schedules.create( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
-			has_fails = create_event( schedule, params[:items_data] )
+			 has_fails = create_event( schedule, params[:items_data] )
+			 if has_fails == []
+				 render json: { status: "200", message: "schedule updated" }, status: 200
+			 else
+				 render json: { status: "400", message: "Fail", scheduled_date: schedule.scheduled_date, fails: "Duplicate #{ has_fails }" }, status: 400
+			 end
+		elsif
+			 schedule = current_user.caregiver.schedules.create( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
+			 has_fails = create_event( schedule, params[:items_data] )
+			 render json: { status: "200", message: "schedule created" }, status: 200
 		end
 
-		has_fails == [] ? ( render json: { status: "200", message: "OK" }, status: 200 ) : ( render json: { status: "400", message: "Fail", scheduled_date: schedule.scheduled_date, fails: has_fails }, status: 400 )
 
 	end
 
@@ -49,17 +54,24 @@ class ApiV1::ItemsController < ApiController
 	private
 
 	def create_event(schedule, raw_data)
-		has_fails = []
 		data = JSON.parse( raw_data )
+		has_fails = []
 		data["items_data"].each do |item|
 			t = TimeZone.find_by_zone( item["operation_time"] )
-			if schedule.events.find_by_time_zone_id(t.id).present?
-				has_fails << "#{item["operation_time"]} is already booked."
+			event = schedule.events.find_by_time_zone_id(t.id)
+			if event.present?
+				 event.update( push: true ) if item["important"] == true
+				 begin
+					 event.demands << Demand.find_by_id( item["item_id"] )
+				 rescue
+				 	 has_fails << [ Demand.find_by_id( item["item_id"] ).demand_name, item["operation_time"] ]
+				 end
 			else
-				schedule.events.create( push: item["important"], time_zone_id: t.id )
+				 event = schedule.events.create( push: item["important"], time_zone_id: t.id )
+				 event.demands << Demand.find_by_id( item["item_id"] )
 			end
 		end
-		has_fails
+		has_fails 
 	end
 
 end
