@@ -38,9 +38,8 @@ namespace :web do
 							k = 0
 		30.times {
 							k += 1
-							s = c1.schedules.create(scheduled_date: Time.now.days_ago(k))
+							s = c1.schedules.create(scheduled_date: Time.now.days_ago(k), requester_id: r1)
 								e1 = s.events.new
-								e1.requester = r1
 								e1.demands << Demand.all.sample(2)
 								e1.time_zone = TimeZone.find(10)
 								e1.caregiver_confirm = true
@@ -48,7 +47,6 @@ namespace :web do
 								e1.save
 
 								e2 = s.events.new
-								e2.requester = r1
 								e2.demands << Demand.all.sample(2)
 								e2.time_zone = TimeZone.find(15)
 								e2.caregiver_confirm = true
