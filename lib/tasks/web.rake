@@ -35,7 +35,25 @@ namespace :web do
 								e3.requester_confirm = true
 								e3.save
 							}	
+							k = 0
+		30.times {
+							k += 1
+							s = c1.schedules.create(scheduled_date: Time.now.days_ago(k))
+								e1 = s.events.new
+								e1.requester = r1
+								e1.demands << Demand.all.sample(2)
+								e1.time_zone = TimeZone.find(10)
+								e1.caregiver_confirm = true
+								e1.requester_confirm = true
+								e1.save
 
+								e2 = s.events.new
+								e2.requester = r1
+								e2.demands << Demand.all.sample(2)
+								e2.time_zone = TimeZone.find(15)
+								e2.caregiver_confirm = true
+								e2.requester_confirm = false
+								e2.save
 		j = 0
 		30.times {
 							j += 1
@@ -62,7 +80,6 @@ namespace :web do
 								e3.requester_confirm = true
 								e3.save
 							}	
-
 							for j in 1..30
 								h = HealthRecord.new
 								h.caregiver = c1
@@ -76,6 +93,7 @@ namespace :web do
 								h.requester = r2
 								h.update(systolic_record: rand(120..140), diastolic_record: rand(80..95), heart_rate: rand(65..85), record_day: Time.now - j.day)			
 							end
+
 
 	end
 end

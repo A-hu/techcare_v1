@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20161011113604) do
 
   create_table "caregiver_requester_relationships", force: :cascade do |t|
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 20161011113604) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "comment_category_id"
+    t.integer  "user_id"
     t.index ["comment_category_id"], name: "index_comments_on_comment_category_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
   end
@@ -141,11 +143,13 @@ ActiveRecord::Schema.define(version: 20161011113604) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.integer  "caregiver_id",   null: false
-    t.date     "scheduled_date", null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "caregiver_id",        null: false
+    t.date     "scheduled_date",      null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "requester_id"
+    t.boolean  "caregiver_confirmed"
+    t.boolean  "requester_confirmed"
     t.index ["caregiver_id"], name: "index_schedules_on_caregiver_id"
     t.index ["requester_id"], name: "index_schedules_on_requester_id"
     t.index ["scheduled_date", "requester_id"], name: "index_schedules_on_scheduled_date_and_requester_id", unique: true

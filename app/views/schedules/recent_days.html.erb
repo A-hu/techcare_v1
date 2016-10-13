@@ -1,0 +1,44 @@
+<h1><%= @requester.user.first_name %>行程</h1>
+
+<table class="table table-bordered">	
+<tr>
+	<th></th>
+<% @schedule_dates.each do |d| %>
+	<th class= "text-center"><%= d %></th>
+<% end %>
+</tr>
+
+<% TimeZone.all.each do |t| %>
+	<% if @timezones.include?(t) %>
+	<tr>
+		<td style="font-weight:bold"><%= t.zone  %></td>
+		<% @schedule_dates.each do |d| %> 
+			<td>
+			<% @schedules.where(:scheduled_date => d).each do |s| %>
+				<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
+				<%= e.schedule.try(:requester).try(:user).try(:first_name)	 %><br>
+					<% e.try(:demands).try(:each) do |d| %>
+						<%= d.demand_name %><br>
+					<% end %>		
+				<% end %>	
+			<% end %>
+			</td>
+		<% end %>		
+	</tr>	
+	<% end %>
+<% end %>
+	<tr>
+		<td style="font-weight:bold">comment</td>
+		<% @schedule_dates.each do |d| %>
+		  <td>
+				<% @schedules.where(:scheduled_date => d).each do |s| %>
+			  	<% s.comments.each do |c|%>
+						<%=	c.comment_category.name %>
+						<%=	c.content %>
+			  	 <% end %>
+			 </td>	
+			<% end %>    
+		<% end %>
+	</tr>
+
+</table>	
