@@ -54,6 +54,7 @@ namespace :web do
 								e2.caregiver_confirm = true
 								e2.requester_confirm = false
 								e2.save
+							}
 		j = 0
 		30.times {
 							j += 1
