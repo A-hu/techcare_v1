@@ -4,10 +4,19 @@ class UserMailer < ApplicationMailer
   # with the following lookup:
   #
   #   en.user_mailer.notify_comment.subject
-  #
-  def notify_comment
-    @greeting = "Hi"
 
-    mail to: "zuzen324@hotmail.com"
+  def notify_comment(user, comment)
+      @user = user
+      @comment = comment
+      mail(:to => user.email, :subject => "New Comment")
   end
+  def notify_set_schedule(user)
+    @user = user
+    if @user.caregiver
+      mail(:to => user.email, :subject => "Setting Schedule")
+    else
+      mail(:to => user.email, :subject => "Confirm Schedule")
+    end
+  end
+
 end
