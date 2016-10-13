@@ -1,5 +1,13 @@
-<h1>User#notify_comment</h1>
+<h1>Notify comment</h1>
 
 <p>
-  <%= @greeting %>, find me in app/views/user_mailer/notify_comment.html.erb
+  Hi <%=@user.first_name %>,
+  <br>
+  有新留言在 <%= root_url %>
+  <br>
+  針對<%= @comment.commentable.scheduled_date %>行程：
+  <br>
+  留言種類：<%= @comment.comment_category.name %>
+  <br>
+  留言內容：<%= @comment.content %>
 </p>

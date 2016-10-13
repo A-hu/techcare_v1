@@ -9,8 +9,17 @@ class CommentsController < ApplicationController
 		@schedule = Schedule.find_by_scheduled_date(params[:schedule])
 		@comment = @schedule.comments.new(comment_params)
 		@comment.user_id = current_user.id
-		@comment.save
-		redirect_to schedule_path(current_user)
+		if current_user.caregiver
+			receiver = @schedule.requester.user
+		else
+			receiver = @schedule.caregiver.user
+		end	
+		if @comment.save
+			UserMailer.notify_comment(receiver, @comment).deliver_now!
+			redirect_to schedule_path(current_user)
+		else
+			render :action => :new
+		end		
 	end
 
 	private
