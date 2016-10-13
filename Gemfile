@@ -11,6 +11,7 @@ gem 'bootstrap-datepicker-rails'
 gem "paperclip"
 gem "rails-i18n"
 gem "letter_opener", :group => :development
+gem 'whenever', :require => false
 
 gem 'ruby-graphviz'
 gem "rails-erd"
