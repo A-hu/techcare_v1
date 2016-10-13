@@ -54,4 +54,10 @@ class Requester < ApplicationRecord
 		end
 		return arr
 	end
+
+	def self.weekly_notify
+		Requester.all.each do |c|
+			UserMailer.notify_set_schedule(c.user).deliver_now!
+		end		
+	end
 end

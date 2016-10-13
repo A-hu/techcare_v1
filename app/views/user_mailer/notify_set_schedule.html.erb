@@ -1,0 +1,20 @@
+<% if @user.caregiver %>
+	<h1>Notify Setting Schedule</h1>
+
+	<p>
+	  Hi <%=@user.first_name %>,
+	  <br>
+	  請設定下週行程 <%= root_url %>
+	</p>
+<% else %>
+	<h1>Notify Confirming Schedule</h1>
+
+	<p>
+	  Hi <%=@user.first_name %>,
+	  <br>
+	  請確認下週行程 <%= root_url %>
+	</p>
+
+<% end %>
+
+<%= link_to "haha" , root_url %>

@@ -17,4 +17,11 @@ class Caregiver < ApplicationRecord
 
 	has_many :health_records, dependent: :destroy
 	has_many :requesters, through: :health_records, dependent: :destroy
+
+	def self.weekly_notify
+		Caregiver.all.each do |c|
+			UserMailer.notify_set_schedule(c.user).deliver_now!
+		end		
+	end
+
 end
