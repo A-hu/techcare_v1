@@ -6,4 +6,5 @@ class Schedule < ApplicationRecord
 	has_many :events, dependent: :destroy
 
 	has_many :comments, as: :commentable, dependent: :destroy
+
 end
