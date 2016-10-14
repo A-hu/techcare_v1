@@ -1,0 +1,13 @@
+<h1>重要事項已完成</h1>
+
+<p>
+  <%= @user.first_name %> 先生/小姐, 您好
+  <br>
+  您的家屬已完成<%= @demands %>
+  <br>
+  詳盡流程請點：<%= root_url(auth_token: @user.authentication_token) %>
+  <br>
+  您的照顧者: <%= @event.schedule.caregiver.user.last_name + @event.schedule.caregiver.user.first_name %>
+  <br>
+  已於<%= @event.complete_time %>完成您勾選的重要項目
+</p>

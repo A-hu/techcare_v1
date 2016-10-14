@@ -13,14 +13,11 @@ Rails.application.routes.draw do
 
     post "/login" => "auth#login"
     post "/logout" => "auth#logout"
-
-		# match '/schedules' => 'schedules#show', :via => :get
 		post '/requesterList' => 'schedules#show'
 		post '/itemsList'     => 'items#show'
-
     post '/setItems'      => 'items#create'
-    post '/updateItem'    => 'items#complete'
-    post '/itemHistory'   => 'healthcare#show'
+    post '/updateItems'   => 'items#complete'
+    post '/itemHistory'   => 'healthrecords#seven_day_records'
 
   end
 
