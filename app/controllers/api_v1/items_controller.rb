@@ -3,6 +3,7 @@ class ApiV1::ItemsController < ApiController
   before_action :authenticate_user!
 
 	def show
+
 		if schedule = current_user.caregiver.schedules.find_by( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
 			@events = schedule.events
 		elsif params[:requester_id] == ""
@@ -11,6 +12,7 @@ class ApiV1::ItemsController < ApiController
 		else
 			render json: { message: "Fail" }, status: 400
 		end
+
 	end
 
 	def create
@@ -30,16 +32,24 @@ class ApiV1::ItemsController < ApiController
 			 render json: { status: "200", message: "schedule created" }, status: 200
 		end
 
-
 	end
 
 	def complete
 
 		schedule = current_user.caregiver.schedules.find_by( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
-		data = JSON.parse( params[:item_data] )
-		event = schedule.events.find_by_id( data["item_id"] )
 
-		event.presents ? ( render json: { status: "200", message: "OK" }, status: 200 ) : ( render json: { status: "400", message: "This event is not existing." }, status: 400 )
+		data = JSON.parse( params[:items_data] )
+		if event = schedule.events.find_by_id( data["event_id"] )
+		   event.update( complete_time: data["complete_time"] )
+	  		if event.push == true
+			 	  UserMailer.notify_push(event.schedule.requester.user, event).deliver_now!  
+			    render json: { status: "200", message: "已寄信通知家屬事項完成" }, status: 200
+  			else
+					render json: { status: "200", message: "事項完成" }, status: 200
+			  end
+		else
+			render json: { status: "400", message: "Fail" }, status: 400
+		end
 
 	end
 
@@ -67,7 +77,7 @@ class ApiV1::ItemsController < ApiController
 				 	 has_fails << [ Demand.find_by_id( item["item_id"] ).demand_name, item["operation_time"] ]
 				 end
 			else
-				 event = schedule.events.create( push: item["important"], time_zone_id: t.id )
+				 event = schedule.events.create( push: item["important"], time_zone_id: t.id, caregiver_confirm: true )
 				 event.demands << Demand.find_by_id( item["item_id"] )
 			end
 		end
