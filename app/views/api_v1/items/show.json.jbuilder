@@ -9,8 +9,3 @@ json.items_data @events do |e|
 	json.important e.push
 	json.complete_time e.complete_time
 end
-
-      # "event_id" : "18274",
-      # "operation_time" : "15:00",
-      # "name" : "翻身",
-      # "important" : "Y"
