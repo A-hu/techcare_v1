@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 		post '/requesterList' => 'schedules#show'
 		post '/itemsList'     => 'items#show'
     post '/setItems'      => 'items#create'
-    post '/updateItems'    => 'items#complete'
-    post '/itemHistory'   => 'healthcare#show'
+    post '/updateItems'   => 'items#complete'
+    post '/itemHistory'   => 'healthrecords#seven_day_records'
 
   end
 
