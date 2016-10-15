@@ -15,10 +15,10 @@ namespace :web do
 			r2 = u5.create_requester(address: "台中", condition_description: "陪伴")
 		u6 = User.create(first_name: "五", last_name: "王", cell_phone_number: "0933245673", email: "elder@hotmail.com", password: "123123")
 			r3 = u6.create_requester(address: "台南", condition_description: "年老")
+			
 		i = 0
 		10.times {
-							i += 1
-							s1 = c1.schedules.create(scheduled_date: i.days.from_now, requester_id: r1)
+							s1 = c1.schedules.create(scheduled_date: i.days.from_now, requester_id: r1.id)
 								e1 = s1.events.new
 								e1.demands << Demand.all.sample(2)
 								e1.time_zone = TimeZone.find(10)
@@ -33,18 +33,18 @@ namespace :web do
 								e2.requester_confirm = false
 								e2.save
 
-							s2 = c1.schedules.create(scheduled_date: i.days.from_now, requester_id: r2)
+							s2 = c1.schedules.create(scheduled_date: i.days.from_now, requester_id: r2.id)
 								e3 = s2.events.new
 								e3.demands << Demand.all.sample(2)
 								e3.time_zone = TimeZone.find(20)
 								e3.caregiver_confirm = false
 								e3.requester_confirm = true
 								e3.save
+							i += 1
 							}	
-							k = 0
+		k = 0
 		30.times {
-							k += 1
-							s1 = c1.schedules.create(scheduled_date: Time.now.days_ago(k), requester_id: r1)
+							s1 = c1.schedules.create(scheduled_date: Time.now.days_ago(k), requester_id: r1.id)
 								e1 = s1.events.new
 								e1.demands << Demand.all.sample(2)
 								e1.time_zone = TimeZone.find(10)
@@ -52,20 +52,21 @@ namespace :web do
 								e1.requester_confirm = true
 								e1.save
 
-								e2 = s.events.new
+								e2 = s1.events.new
 								e2.demands << Demand.all.sample(2)
 								e2.time_zone = TimeZone.find(15)
 								e2.caregiver_confirm = true
 								e2.requester_confirm = false
 								e2.save
 
-							s2 = c1.schedules.create(scheduled_date: Time.now.days_ago(k), requester_id: r2)
+							s2 = c1.schedules.create(scheduled_date: Time.now.days_ago(k), requester_id: r2.id)
 								e3 = s2.events.new
 								e3.demands << Demand.all.sample(2)
 								e3.time_zone = TimeZone.find(rand(1..48))
 								e3.caregiver_confirm = true
 								e3.requester_confirm = true
 								e3.save
+							k += 1
 							}
 
 							for j in 1..30
