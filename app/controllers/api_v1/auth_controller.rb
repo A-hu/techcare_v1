@@ -14,7 +14,7 @@ class ApiV1::AuthController < ApiController
       render :json => { 
                         status:     "200",
                         message:    "Ok",
-                        auth_token: user.authentication_token,
+                        application_token: user.authentication_token,
                         IsCaregiver:  user.caregiver.try(:present?),
                         IsRequester:  user.requester.try(:prensent?)
                       }

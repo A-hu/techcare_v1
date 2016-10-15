@@ -4,9 +4,9 @@ class ApiController < ActionController::Base
 
   def authenticate_user_from_token!
 
-    if params[:auth_token].present?
+    if params[:application_token].present?
       user = User.find_by_authentication_token(
-                  params[:auth_token] )
+                  params[:application_token] )
 
       # Devise: 設定 current_user
       sign_in user, store: false if user
