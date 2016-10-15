@@ -43,9 +43,9 @@ class ApiV1::ItemsController < ApiController
 		demand = event.demands.map {|d| d.id}
 		if event.present?
 			 if demand.include?(21)  
-			 		HealthRecord.create( requester_id: params[:requester_id], systolic_record: params[:systolic_record], diastolic_record: params[:diastolic_record], heart_rate: params[:heart_rate], record_day: data["complete_time"].to_date )
+			 		HealthRecord.create( requester_id: params[:requester_id], systolic_record: data["systolic_record"], diastolic_record: data["diastolic_record"], heart_rate: data["heart_rate"], record_day: data["complete_time"].to_date )
 			 elsif demand.include?(22)
-			 		HealthRecord.create( requester_id: params[:requester_id], blood_sugar: params[:blood_sugar], record_day: data["complete_time"].to_date )
+			 		HealthRecord.create( requester_id: params[:requester_id], blood_sugar: data["blood_sugar"], record_day: data["complete_time"].to_date )
 			 end
 			 		
 		   event.update( complete_time: data["complete_time"] )
