@@ -31,7 +31,6 @@ class SchedulesController < ApplicationController
 			end	
 			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
 		end
-		
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 		@schedule_ids = @schedules.pluck(:id).uniq
 		@timezones = TimeZone.find(@schedules.includes(:events).pluck(:time_zone_id).uniq)

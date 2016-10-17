@@ -1,3 +1,3 @@
-<%= form_for @comment, :url=>comments_path do |f| %>
+<%= form_for @comment, :url=>comments_path(:related_id => params[:related_id]) do |f| %>
     <%= render :partial=>"form", :locals=>{:f=>f}%>
 <% end %>
