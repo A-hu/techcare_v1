@@ -1,4 +1,4 @@
-<h1><%= @caregiver.user.first_name %>行程</h1>
+<h1><%= @target.user.first_name %>行程</h1>
 
 <table class="table table-bordered">	
 <tr>
@@ -16,7 +16,12 @@
 			<td>
 			<% @schedules.where(:scheduled_date => d).each do |s| %>
 				<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
-				<%= e.schedule.try(:requester).try(:user).try(:first_name)	 %><br>
+				<% if current_user.caregiver %>
+					<%= e.schedule.requester.user.first_name	 %>
+				<% else %>
+					<%= e.schedule.try(:caregiver).try(:user).try(:first_name)	 %>
+				<% end %>
+				<br>
 					<% e.try(:demands).try(:each) do |d| %>
 						<%= d.demand_name %><br>
 					<% end %>		
@@ -30,9 +35,11 @@
 
 </table>	
 
-<% @requesters.each do |r| %>
+<% @related_users.each do |r| %>
 	<%= r.user.first_name %>
 	<%= link_to "schedule", schedule_path(r) %>
-	<%= link_to "health_info", health_record_path(r) %>
+	<%= link_to "health_info", health_record_path(r) if current_user.caregiver %>
 	<br>
 <% end %>
+
+<%= link_to "health_info", health_record_path(@target) if current_user.requester %>

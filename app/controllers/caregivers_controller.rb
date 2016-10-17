@@ -1,5 +1,5 @@
 class CaregiversController < ApplicationController
-
+	before_action :authenticate_user!
 	before_action :find_caregiver, only: [:show, :edit, :update, :destroy]
 
 	def index
@@ -17,7 +17,7 @@ class CaregiversController < ApplicationController
 		@caregiver = Caregiver.new( set_params )
 		@caregiver.user = current_user
 		@caregiver.save
-		redirect_to caregivers_path
+		redirect_to schedules_path
 	end
 
 	def edit

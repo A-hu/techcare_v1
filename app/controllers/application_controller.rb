@@ -43,4 +43,7 @@ class ApplicationController < ActionController::Base
 	  																												  requester_attributes: [:user_id, :address, :condition_description]
 	  																												 ])
 	end
+	def after_sign_in_path_for(resource)
+ 		schedules_path
+	end
 end

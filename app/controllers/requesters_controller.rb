@@ -1,5 +1,5 @@
 class RequestersController < ApplicationController
-
+	before_action :authenticate_user!
 	before_action :find_requester, only: [:show, :edit, :update, :destroy]
 
 	def index
@@ -17,7 +17,7 @@ class RequestersController < ApplicationController
 		@requester = Requester.new ( set_params )
 		@requester.user = current_user
 		@requester.save
-		redirect_to requesters_path
+		redirect_to schedules_path
 	end
 
 	def edit
