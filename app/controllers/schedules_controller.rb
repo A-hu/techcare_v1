@@ -16,11 +16,19 @@ class SchedulesController < ApplicationController
 	def show
 		if current_user.caregiver
 			@target	= current_user.caregiver
-			@related_user = Requester.find(params[:id])
+			if params[:related_id]
+				@related_user = Requester.find(params[:related_id])
+			else	
+				@related_user = Requester.find(params[:id])
+			end
 			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
 		else
 			@target	= current_user.requester
-			@related_user = Caregiver.find(params[:id])
+			if params[:related_id]
+				@related_user = Caregiver.find(params[:related_id])
+			else
+				@related_user = Caregiver.find(params[:id])
+			end	
 			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
 		end
 		

@@ -17,6 +17,7 @@ class UserMailer < ApplicationMailer
       @user = user
       @event = event
       @demands = event.demands.map { |d| d.demand_name }
+      @demand_ids = event.demands.map { |d| d.id }
       mail(:to => user.email, :subject => "#{@demands}已完成")
   end
 

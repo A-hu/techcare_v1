@@ -5,7 +5,12 @@
   <br>
   您的家屬已完成<%= @demands %>
   <br>
-  詳盡流程請點：<%= root_url(auth_token: @user.authentication_token) %>
+  詳盡流程請點：
+  <% if @demand_ids.include?(21) || @demand_ids.include?(22) %>
+  	<%= health_record_url(@user,auth_token: @user.authentication_token) %>
+  <% else %>
+  	<%= schedules_url(auth_token: @user.authentication_token) %>
+  <% end %>
   <br>
   您的照顧者: <%= @event.schedule.caregiver.user.last_name + @event.schedule.caregiver.user.first_name %>
   <br>
