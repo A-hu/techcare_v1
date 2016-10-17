@@ -10,6 +10,6 @@
   <br>
   留言內容：<%= @comment.content %>
   <br>
-	<%= link_to "觀看留言", schedule_url(@user, :related_id => @user.caregiver.id) if @user.caregiver %>
-	<%= link_to "觀看留言", schedule_url(@user, :related_id=> @user.requester.id) if @user.requester %>
+	<%= link_to "觀看留言", schedule_url(@user, :related_id => @comment.commentable.requester_id) if @user.caregiver %>
+	<%= link_to "觀看留言", schedule_url(@user, :related_id=> @comment.commentable.caregiver_id) if @user.requester %>
 </p>

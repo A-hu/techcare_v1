@@ -93,6 +93,6 @@
 	<% end %>
 	<% end %>
 <div>
-<%= link_to "新增留言", new_comment_path,:class =>"btn btn-default" %>
+<%= link_to "新增留言", new_comment_path(:related_id => @related_user.id),:class =>"btn btn-default" %>
 </div>
 
