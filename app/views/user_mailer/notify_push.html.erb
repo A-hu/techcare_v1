@@ -7,7 +7,7 @@
   <br>
   詳盡流程請點：
   <% if @demand_ids.include?(21) || @demand_ids.include?(22) %>
-  	<%= health_record_url(@user,auth_token: @user.authentication_token) %>
+  	<%= health_record_url(@user.requester, auth_token: @user.authentication_token) %>
   <% else %>
   	<%= schedules_url(auth_token: @user.authentication_token) %>
   <% end %>
