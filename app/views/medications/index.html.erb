@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<% @medications.each do |medication|%>
-				<% if medication.medication_time.id == 8 %>
+				<% if medication.medication_time.id == 1 %>
 					<th style="padding:10px 25px 10px 25px;"><%= medication.created_at.to_date %></th>
 					<th style="padding:10px 25px 10px 25px;"><%= image_tag( medication.picture.url(:large) ) %></th>
 					<th style="padding:10px 25px 10px 25px;"><%= link_to "移除檔案", requester_medication_path(@requester, medication), method: :delete, :class => "btn btn-default"%></th>	
@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<% @medications.each do |medication|%>
-			<% unless medication.medication_time.id == 8 %>
+			<% unless medication.medication_time.id == 1 %>
 				<th style="padding:10px 25px 10px 25px;"><%= medication.created_at.to_date %></th>
 				<th style="padding:10px 25px 10px 25px;"><%= medication.medication_time.name %></th>
 				<th style="padding:10px 25px 10px 25px;"><%= image_tag( medication.picture.url(:medium) ) %></th>
