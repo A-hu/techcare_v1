@@ -45,7 +45,7 @@
     <ul class="nav nav-pills">
       <% if current_user %>
       <li role="presentation">
-        <%= link_to'近期行程', schedules_path(current_user.requester) if current_user.requester %> </li>
+        <%= link_to'近期行程', schedule_path(current_user.requester.caregivers.first) if current_user.requester %> </li>
       <li role="presentation">
         <%= link_to'健康資料', health_record_path(current_user.requester) if current_user.requester %> </li>
         <li role="presentation"><%= link_to "用藥紀錄", requester_medications_path(current_user.requester) if current_user.requester %></li>
