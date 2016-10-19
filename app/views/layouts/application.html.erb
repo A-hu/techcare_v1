@@ -52,6 +52,7 @@
         <%= link_to'近期行程', schedules_path(current_user.requester) if current_user.requester %> </li>
       <li role="presentation">
         <%= link_to'健康資料', health_record_path(current_user.requester) if current_user.requester %> </li>
+        <li role="presentation"><%= link_to "用藥紀錄", requester_medications_path(current_user.requester) if current_user.requester %></li>
   	  <li>  <%= link_to('修改會員基本資料', edit_registration_path(:user)) %>
       <li role="presentation">
         <%= link_to('登出', destroy_user_session_path, :method => :delete) %> </li>

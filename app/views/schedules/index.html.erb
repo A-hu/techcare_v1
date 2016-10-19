@@ -41,6 +41,3 @@
 	<%= link_to "health_info", health_record_path(r) if current_user.caregiver %>
 	<br>
 <% end %>
-
-<%= link_to "health_info", health_record_path(@target) if current_user.requester %>
-<%= link_to "用藥紀錄", requester_medications_path(@target) if current_user.requester %>
