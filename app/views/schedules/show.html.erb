@@ -45,8 +45,8 @@
 		<% @schedule_dates.each do |d| %>
 		  <td>
 				<% @schedules.where(:scheduled_date => d).each do |s| %>
-				<% if s.caregiver_confirmed != nil %>
-			  	<% if s.caregiver_confirmed == true %>
+				<% if s.requester_confirmed != nil %>
+			  	<% if s.requester_confirmed == true %>
 			  		同意
 			  	<% else %>
 			  		不同意
@@ -86,7 +86,7 @@
 	</tr>
 </div>		
 </table>	
-	<% if Schedule.find(@schedule_ids).pluck(:caregiver_confirmed).include?(nil) %>
+	<% if Schedule.find(@schedule_ids).pluck(:requester_confirmed).include?(nil) %>
 		<div class="form-group">
 			<%= hidden_field_tag "ids",@schedule_ids  %> 
 			<%= submit_tag "行程確認",:class => "btn btn-default" %>

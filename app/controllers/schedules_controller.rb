@@ -42,13 +42,23 @@ class SchedulesController < ApplicationController
 	end
 	def update
 		@ids = params[:ids].split
-		@ids.each do |i|
-			if params[i] != nil
-				Schedule.find(i).update(:caregiver_confirmed => params[i])
+		if current_user.requester
+			@ids.each do |i|
+				if params[i] != nil
+						Schedule.find(i).update(:requester_confirmed => params[i])
+				end
 			end
-		end
-		redirect_to schedule_path(current_user)	
+			redirect_to schedule_path(current_user.requester.caregivers.first)	
+		else
+			@ids.each do |i|
+				if params[i] != nil
+						Schedule.find(i).update(:caregiver_confirmed => params[i])
+				end
+			end
+			redirect_to schedule_path(current_user)	
+		end	
 	end
+
 	def recent_days
 		@requester = Requester.find(params[:requester_id])
 		# @caregiver = current_user.caregiver
