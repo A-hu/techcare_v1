@@ -1,8 +1,8 @@
-<h1><%= @target.user.first_name %>行程</h1>
+<h1><%= @target.user.first_name %>近期行程</h1>
 
 <table class="table table-bordered">	
-<tr>
-	<th></th>
+<tr class="success">
+	<th width=10%></th>
 <% @schedule_dates.each do |d| %>
 	<th class= "text-center"><%= d %></th>
 <% end %>
@@ -11,7 +11,7 @@
 <% TimeZone.all.each do |t| %>
 	<% if @timezones.include?(t) %>
 	<tr>
-		<td style="font-weight:bold"><%= t.zone  %></td>
+		<td style="font-weight:bold"><%= t.to_time  %></td>
 		<% @schedule_dates.each do |d| %> 
 			<td>
 			<% @schedules.where(:scheduled_date => d).each do |s| %>
@@ -42,4 +42,4 @@
 	<br>
 <% end %>
 
-<%= link_to "health_info", health_record_path(@target) if current_user.requester %>
+<%#= link_to "health_info", health_record_path(@target) if current_user.requester %>
