@@ -8,10 +8,23 @@ class MedicationsController < ApplicationController
 	end
 
 	def create
-		date = Time.now
-		@medication = @requester.medications.new( set_params )
-		@medication.save
-		event_create( @medication, date ) unless @medication.medication_time.id == 1
+		date = Time.now.to_date
+		@medication = Medication.new( set_params )
+		if @medication.picture_content_type.nil?
+			flash[:alert] = "未上傳圖片"
+		else
+			if @requester.medications.map{|m| m.medication_time}.map{|t| t.take_time}.include?(@medication.medication_time.take_time) && @medication.medication_time.take_time.present?
+				flash[:alert] = "重複上傳，如有錯誤請刪除檔案後再重新上傳"
+			else
+				@medication.requester = @requester
+				@medication.save
+				if date.to_date.wday != 0
+					event_create( @medication, date, 0 ) unless @medication.medication_time.id == 1
+				else
+					event_create( @medication, date, 1 ) unless @medication.medication_time.id == 1
+				end
+			end
+		end
 		redirect_to requester_medications_path( @requester )
 	end
 
@@ -19,7 +32,11 @@ class MedicationsController < ApplicationController
 		date = Time.now.to_date
 		@medication = Medication.find( params[:id] )
 		@medication.destroy
-		remove_demand( @requester, @medication, date )
+		if date.to_date.wday != 0
+			remove_demand( @requester, @medication, date, 0 )
+		else
+			remove_demand( @requester, @medication, date, 1 )
+		end
 		redirect_to requester_medications_path( @requester )
 	end
 
@@ -33,9 +50,9 @@ class MedicationsController < ApplicationController
 		params.require(:medication).permit(:requester_id, :description, :picture, :time_id)
 	end
 
-	def event_create( medication, date )
+	def event_create( medication, date, start )
 
-		i = 0
+		i = start
 		until (date + i.days).wday == 0
 			schedule = Schedule.find_by( scheduled_date: (date + i.days).to_date )
 			if schedule.present?
@@ -61,15 +78,16 @@ class MedicationsController < ApplicationController
 		
 	end
 
-	def remove_demand( requester, medication, date )
-		
-		i = 0
+	def remove_demand( requester, medication, date, start )
+
+		i = start
 		until (date + i.days).wday == 0
 			schedule = requester.schedules.find_by( scheduled_date: (date + i.days).to_date )
 			t = TimeZone.find_by_zone( medication.medication_time.take_time )
 			event = schedule.events.find_by( time_zone_id: t.id )
 			medication_demand = medication.medication_time.name
 			demand = Demand.find_by( demand_name: medication_demand )
+			medication.destroy
 			event.demands.destroy(demand)
 			event.destroy if event.demands == []
 			i += 1

@@ -54,6 +54,7 @@ namespace :init do
 	end
 
 	task comment_category: :environment do
+		CommentCategory.create(name: "照護留言")
 		CommentCategory.create(name: "臨時新增")
 		CommentCategory.create(name: "醫療建議")
 		CommentCategory.create(name: "注意事項")
@@ -111,6 +112,7 @@ namespace :init do
 		MedicationTime.create(name: "服藥：晚餐飯前", take_time: "1730" )
 		MedicationTime.create(name: "服藥：晚餐飯後", take_time: "1900" )
 		MedicationTime.create(name: "服藥：睡前", take_time: "2200" )
+		MedicationTime.create(name: "其它用藥")
 	end
 	
 end
