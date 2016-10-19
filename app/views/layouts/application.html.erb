@@ -13,19 +13,59 @@
 
   <body>
   <div class="container">
-  	<p style="color: green"><%= flash[:notice] %></p>
-    <p style="color: red"><%= flash[:alert] %></p>
-    <div class="nav pull-right clearfix">
-    <% if current_user %>
-	    <%= link_to('登出', destroy_user_session_path, :method => :delete) %> |
-	    <%= link_to('修改會員基本資料', edit_registration_path(:user)) %>
-	  <% else %>
-	    <%= link_to('註冊', new_registration_path(:user)) %> |
-	    <%= link_to('登入', new_session_path(:user)) %>
-	  <% end %>
-    </div>
+  	<!-- <p style="color: green"><%= flash[:notice] %></p>
+    <p style="color: red"><%= flash[:alert] %></p> -->
+   <!--  <div class="row">
+        <div class="col-md-12">
+          <% if flash[:notice].present? %>
+            <div class="alert alert-success" role="alert"><%= notice %>
+            </div>
+          <% end %>
+          <% if flash[:alert].present? %>
+            <div class="alert alert-danger" role="alert">
+              <%= alert %>
+            </div> 
+          <% end %>  
+        </div>
+    </div>  -->
+
+<nav class="navbar">
+ <div class="row">
+  <div id="logo" class="pull-left">
+    <%= image_tag("logo.jpg") %>
+  </div>
+  <div class="middle pull-left">
+    <h3>長照守護家</h3>
+  </div>
+  <div class="pull-right">
+      家屬<%= current_user.first_name if current_user%>
+  </div>
+  <div class="user pull-right">
+    <%= image_tag("R1.png") %>    
+  </div>
+
+ </div> 
+  <div class="nav-content">
+    <ul class="nav nav-pills">
+      <% if current_user %>
+      <li role="presentation">
+        <%= link_to'近期行程', schedules_path(current_user.requester) if current_user.requester %> </li>
+      <li role="presentation">
+        <%= link_to'健康資料', health_record_path(current_user.requester) if current_user.requester %> </li>
+  	  <li>  <%= link_to('修改會員基本資料', edit_registration_path(:user)) %>
+      <li role="presentation">
+        <%= link_to('登出', destroy_user_session_path, :method => :delete) %> </li>
+      </li>
+  	  <% else %>
+
+  	   <li role="presentation"><%= link_to('註冊', new_registration_path(:user)) %> </li>
+  	    <li role="presentation"><%= link_to('登入', new_session_path(:user)) %></li>
+  	  <% end %>
+    </ul>
+  </div> 
+</nav>  
     <%= yield %>
-    <%= link_to "回首頁", root_path, class: "btn btn-default center-block", style: "width: 10%"%>
+    <%#= link_to "回首頁", root_path, class: "btn btn-default center-block", style: "width: 10%"%>
   </div>  
   </body>
 </html>

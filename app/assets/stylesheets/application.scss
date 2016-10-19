@@ -15,8 +15,27 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "welcomes";
 
 table {
   background-color: transparent;
   table-layout: fixed;
+}
+
+.nav-content{
+	background-color: #F0F1F2;
+	color: #000;
+}
+.nav-content li{
+	color: #000;
+}
+#logo{
+	width: 6%;
+}
+.user {
+	width: 8%;
+}
+#logo img,.user img{
+	width: 100%;
+	height: auto;
 }

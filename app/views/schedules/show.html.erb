@@ -1,27 +1,28 @@
-<h1><%= @target.user.first_name %>行程</h1>
+<h1><%= @target.user.first_name %>近期行程</h1>
+<h3>居家服務員：<%= @related_user.user.first_name %></h3>
 <table class="table table-bordered">	
 <tr>
-	<th></th>
+	<th width=10% ></th>
 <% @schedule_dates.each do |d| %>
-	<th class= "text-center"><%= d %></th>
+	<th class= "text-center" style="font-weight:normal"><%= d %></th>
 <% end %>
 </tr>
 
 <% TimeZone.all.each do |t| %>
 	<% if @timezones.include?(t) %>
 	<tr>
-		<td style="font-weight:bold"><%= t.zone  %></td>
+		<td><%= t.to_time  %></td>
 		<% @schedule_dates.each do |d| %> 
-			<td>
+			<td style="font-weight:bold" >
 			<% @schedules.where(:scheduled_date => d).each do |s| %>
 				<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
 
-				<% if current_user.requester %>
-					<%= e.schedule.caregiver.user.first_name	 %>
-				<% else %>
-					<%= e.schedule.requester.user.first_name	 %>
-				<% end %>
-				<br>
+				<%# if current_user.requester %>
+					<%#= e.schedule.caregiver.user.first_name	 %>
+				<%# else %>
+					<%#= e.schedule.requester.user.first_name	 %>
+				<%# end %>
+				
 					<% e.try(:demands).try(:each) do |d| %>
 						<%= d.demand_name %><br>
 					<% end %>		
@@ -44,8 +45,8 @@
 		<% @schedule_dates.each do |d| %>
 		  <td>
 				<% @schedules.where(:scheduled_date => d).each do |s| %>
-				<% if s.caregiver_confirmed != nil %>
-			  	<% if s.caregiver_confirmed == true %>
+				<% if s.requester_confirmed != nil %>
+			  	<% if s.requester_confirmed == true %>
 			  		同意
 			  	<% else %>
 			  		不同意
@@ -85,7 +86,7 @@
 	</tr>
 </div>		
 </table>	
-	<% if Schedule.find(@schedule_ids).pluck(:caregiver_confirmed).include?(nil) %>
+	<% if Schedule.find(@schedule_ids).pluck(:requester_confirmed).include?(nil) %>
 		<div class="form-group">
 			<%= hidden_field_tag "ids",@schedule_ids  %> 
 			<%= submit_tag "行程確認",:class => "btn btn-default" %>

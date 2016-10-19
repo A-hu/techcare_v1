@@ -1,3 +1,48 @@
 // Place all the styles related to the welcomes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#banner{
+	height: 100vh;
+  background-image: image-url("tech-care01.jpg");
+  background-repeat:no-repeat;
+  background-size: cover;
+  background-position:center bottom;
+}
+
+#banner .container{
+	position: relative;
+	top: 30%;
+}
+
+.banner-content-inner {
+	color: #228B22;	
+}
+
+.banner-content-inner h2{
+	color: #000;
+}
+
+.btn-outline {
+  color: white;
+  border-color: white;
+  border: 1px solid;
+}
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active,
+.btn-outline.active {
+  color: white;
+  background-color: #fdcc52;
+  border-color: #fdcc52;
+}
+.btn {
+  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 300px;
+}
+.btn-xl {
+  padding: 15px 45px;
+  font-size: 15px;
+}
