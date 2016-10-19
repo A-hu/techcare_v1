@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :users, :caregivers, :requesters
+  resources :users, :caregivers
+  resources :requesters do 
+    resources :medications, controllers: "requester_medications"
+  end 
   resources :schedules 
   get 'schedules/:requester_id/:date', :to => 'schedules#recent_days', :as => "schedules/recent_days"
   resources :health_records

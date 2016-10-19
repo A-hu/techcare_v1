@@ -54,11 +54,11 @@ namespace :init do
 	end
 
 	task comment_category: :environment do
-		CommentCategory.create(name: "留言")
+		CommentCategory.create(name: "照護留言")
 		CommentCategory.create(name: "臨時新增")
-		CommentCategory.create(name: "普通建議")
 		CommentCategory.create(name: "醫療建議")
 		CommentCategory.create(name: "注意事項")
+		CommentCategory.create(name: "感謝的話")
 	end
 
 	task demand_category: :environment do
@@ -92,17 +92,27 @@ namespace :init do
 		d6 = DemandCategory.create(name: "休閒服務")
 			d6.demands.create(demand_name: "陪同散步")
 			d6.demands.create(demand_name: "閱讀書報")
-		d7 = DemandCategory.create(name: "其他服務")
+		d7 = DemandCategory.create(name: "服藥時間")
+			d7.demands.create(demand_name: "服藥：早餐飯前")
+			d7.demands.create(demand_name: "服藥：早餐飯後")
+			d7.demands.create(demand_name: "服藥：午餐飯前")
+			d7.demands.create(demand_name: "服藥：午餐飯後")
+			d7.demands.create(demand_name: "服藥：晚餐飯前")
+			d7.demands.create(demand_name: "服藥：晚餐飯後")
+			d7.demands.create(demand_name: "服藥：睡前")
+		d8 = DemandCategory.create(name: "其他服務")
 	end
 
 	task medication_time: :environment do
-		MedicationTime.create(name: "早餐飯前")
-		MedicationTime.create(name: "早餐飯後")
-		MedicationTime.create(name: "午餐飯前")
-		MedicationTime.create(name: "午餐飯後")
-		MedicationTime.create(name: "晚餐飯前")
-		MedicationTime.create(name: "晚餐飯後")
-		MedicationTime.create(name: "睡前")
+		MedicationTime.create(name: "處方簽")
+		MedicationTime.create(name: "服藥：早餐飯前", take_time: "0700" )
+		MedicationTime.create(name: "服藥：早餐飯後", take_time: "0900" )
+		MedicationTime.create(name: "服藥：午餐飯前", take_time: "1100" )
+		MedicationTime.create(name: "服藥：午餐飯後", take_time: "1300" )
+		MedicationTime.create(name: "服藥：晚餐飯前", take_time: "1730" )
+		MedicationTime.create(name: "服藥：晚餐飯後", take_time: "1900" )
+		MedicationTime.create(name: "服藥：睡前", take_time: "2200" )
+		MedicationTime.create(name: "其它用藥")
 	end
 	
 end
