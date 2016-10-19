@@ -22,7 +22,9 @@ table {
   background-color: transparent;
   table-layout: fixed;
 }
-
+.navbar{
+	padding-top: 30px;
+}
 .nav-content{
 	background-color: #F0F1F2;
 	color: #000;
@@ -30,13 +32,35 @@ table {
 .nav-content li{
 	color: #000;
 }
-#logo{
-	width: 6%;
+.middle.col-md-2{
+	h3{
+		position: absolute;
+		top: 13px;
+    left: 30px
+	}
+	h4{
+		position: absolute;
+		top: 10px;
+    left: 40px
+	}
 }
-.user {
-	width: 8%;
-}
-#logo img,.user img{
-	width: 100%;
+#logo img{
+	width: 80px;
 	height: auto;
 }
+.user img{
+	position: absolute;
+	top: -15px;
+	width: 97px;
+	height: auto;
+}
+
+.nav-content a {
+	color: #000;
+}
+
+.nav-content a:hover {
+	border: solid #E5829A;
+	color: #E5829A;
+}
+

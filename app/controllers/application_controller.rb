@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
+  
 	before_action :authenticate_user_from_token!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -44,10 +44,10 @@ class ApplicationController < ActionController::Base
 	  																												 ])
 	end
 	def after_sign_in_path_for(resource)
-	if current_user.caregiver	
- 		schedules_path
- 	else
- 		schedule_path(current_user.requester.caregivers.first)
- 	end	
+		if current_user.caregiver	
+	 		schedules_path
+	 	else
+	 		schedule_path(current_user.requester.caregivers.first)
+	 	end	
 	end
 end
