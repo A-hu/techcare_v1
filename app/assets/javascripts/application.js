@@ -16,3 +16,5 @@
 //= require_tree .
 //= require jquery
 //= require bootstrap-sprockets
+//= require c3.min
+//= require d3.v3.min
