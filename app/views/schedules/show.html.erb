@@ -1,17 +1,21 @@
-<h1><%= @target.user.first_name %>近期行程</h1>
-<h3>居家服務員：<%= @related_user.user.first_name %></h3>
-<table class="table table-bordered">	
-<tr>
-	<th width=10% ></th>
+<div class= "text-center" style="margin-bottom:30px;margin-top:30px;" >
+<h2 style="font-weight:bold"><%#= @target.user.first_name %>近期行程</h2>
+</div>
+<h4>居家服務員：<%= @related_user.user.first_name %></h4>
+
+<div class="schedule" style="background-color:#F9FAFA; padding: 40px" >
+<table class="table table-bordered text-center" style="border:2px #000 solid;" >	
+<tr style="background-color:#F8F7E5 " >
+	<th width=10% class= "text-center">時間</th>
 <% @schedule_dates.each do |d| %>
-	<th class= "text-center" style="font-weight:normal"><%= d %></th>
+	<th class= "text-center" style="font-weight:normal;border-bottom:3px #7F7F7F solid;"><%= d %></th>
 <% end %>
 </tr>
 
 <% TimeZone.all.each do |t| %>
 	<% if @timezones.include?(t) %>
 	<tr>
-		<td><%= t.to_time  %></td>
+		<td style="background-color:#F8F7E5 ;border-right:3px #7F7F7F solid;"><%= t.to_time  %></td>
 		<% @schedule_dates.each do |d| %> 
 			<td style="font-weight:bold" >
 			<% @schedules.where(:scheduled_date => d).each do |s| %>
@@ -22,10 +26,10 @@
 				<%# else %>
 					<%#= e.schedule.requester.user.first_name	 %>
 				<%# end %>
-				
-					<% e.try(:demands).try(:each) do |d| %>
-						<%= d.demand_name %><br>
-					<% end %>		
+					<%= e.demands.first.demand_name %>
+					<%# e.try(:demands).try(:each) do |d| %>
+						<%#= d.demand_name %><br>
+					<%# end %>		
 				<% end %>	
 			<% end %>
 			</td>
@@ -33,10 +37,11 @@
 	</tr>	
 	<% end %>
 <% end %>
-
+</table>	
+<table class="table table-bordered text-center" style="border:2px #000 solid;"	>	
 
 	<tr>
-		<td style="font-weight:bold">
+		<td width=10% style="font-weight:bold; background-color:#E8F7DA; border-right:2px #000 solid;">
 		 行程意見
 		<%= form_tag("schedule_path(current_user)", method: :patch ) do %>
 	
@@ -67,18 +72,27 @@
 		<% end %>
 		</tr>
 		<%#= f.submit %>		
-		
-
+</table>	
+<table class="table table-bordered" style="border:2px #000 solid;" 	>	
 <div>
 	<tr>
-		<td style="font-weight:bold">留言</td>
+		<td width=10% style="font-weight:bold; background-color:#E8EFF8; border-right:2px #000 solid;" class=" text-center" >留言</td>
 		<% @schedule_dates.each do |d| %>
-		  <td>
+		  <td style="color:#F16F90">
 				<% @schedules.where(:scheduled_date => d).each do |s| %>
 			  	<% s.comments.each do |c|%>
-						<%=	c.comment_category.name %>:
+			  	<div style="color:#000;	text-decoration:underline;">
+			  		By 
+			  		<% if User.find(c.user_id).requester %>
+			  		  家屬
+			  		<% else %>
+			  		  居服員
+			  	  <% end %>   
+			  		<%#=	User.find(c.user_id).first_name %><br>
+			  	</div>	
+						<%=	c.comment_category.name %>: <br>
 						<%=	c.content %><br>
-						by: <%=	User.find(c.user_id).first_name %><br>
+						
 			  	 <% end %>
 			 </td>	
 			<% end %>    
@@ -97,3 +111,4 @@
 <%= link_to "新增留言", new_comment_path(:related_id => @related_user.id),:class =>"btn btn-default" %>
 </div>
 
+</div>

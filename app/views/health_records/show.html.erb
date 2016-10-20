@@ -1,19 +1,37 @@
-<!-- @requester.health_records.each do |h|
-	h.
-end -->
-<h1><%= @requester.user.first_name %>健康資料</h1>
+<div class= "text-center" style="margin-bottom:30px;margin-top:30px;" >
+	<h2 style="font-weight:bold">健康資料</h2>
+</div>
 
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h2 class="text-center">血壓</h2>
+
+<div class="panel panel-default " >
+	<div class="panel-heading" style="background-color:#F9FAFA;">
+		<h3 class="text-center">基本體況</h3>
+		<p style="margin-left:30px">
+		姓名： <%= @requester.user.full_name %><br>
+		性別：
+		<% if @requester.user.gender="F" %>
+			女
+		<% else %>
+			男
+		<% end %>
+		<br>
+		年齡：<%= @requester.user.age %><br>
+		身體狀況：<%= @requester.condition_description %><br>
+		</p>
+	</div>
+</div>
+
+<div class="panel panel-default " >
+	<div class="panel-heading" style="background-color:#F9FAFA;">
+		<h3 class="text-center">血壓</h3>
 		<div id="chart1">
 		</div>
 	</div>
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<h2 class="text-center">心跳</h2>
+	<div class="panel-heading"  style="background-color:#F9FAFA;">
+		<h3 class="text-center">心跳</h3>
 		<div id="chart2">
 		</div>
 	</div>

@@ -43,6 +43,15 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
+  <div class="field">
+    <%= f.label :上傳相片 %><br />
+    <%= f.file_field :picture %> 
+    <% if @user.picture.exists? %>
+      <%= check_box_tag "remove_upload_file","1" %>移除上傳檔案
+    <% end %>
+  </div>
+
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

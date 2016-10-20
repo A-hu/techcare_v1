@@ -19,10 +19,12 @@
 @import "c3";
 
 table {
-  background-color: transparent;
+  background-color: #fff;
   table-layout: fixed;
 }
-
+.navbar{
+	padding-top: 30px;
+}
 .nav-content{
 	background-color: #F0F1F2;
 	color: #000;
@@ -30,13 +32,44 @@ table {
 .nav-content li{
 	color: #000;
 }
-#logo{
-	width: 6%;
+.middle.col-md-2{
+	h2{
+		position: absolute;
+		top: -15px;
+    left: 10px;
+    font-weight: bold;
+    color: #57D1C2;
+	}
 }
-.user {
-	width: 8%;
+.middle.col-md-1{
+	h4{
+		margin-left: -25px;
+		position: absolute;
+		top: -10px;
+    
+	}
 }
-#logo img,.user img{
-	width: 100%;
+#logo img{
+	margin-left: 20px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+	width: 70px;
 	height: auto;
 }
+.user img{
+	position: absolute;
+	top: -15px;
+	width: 65px;
+	height: auto;
+}
+
+.nav-content a {
+	color: #000;
+}
+
+.nav-content a:hover{
+	background-color:#57D1C2 !important;
+	color: #fff;
+}
+
+
