@@ -18,4 +18,10 @@ class User < ApplicationRecord
   def generate_authentication_token
     self.authentication_token = Devise.friendly_token
   end
+
+  def full_name
+    a=self.last_name
+    b=self.first_name
+    c=a+b
+  end
 end
