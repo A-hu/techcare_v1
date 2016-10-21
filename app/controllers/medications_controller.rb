@@ -18,11 +18,7 @@ class MedicationsController < ApplicationController
 			else
 				@medication.requester = @requester
 				@medication.save
-				if date.to_date.wday != 0
-					event_create( @medication, date, 0 ) unless @medication.medication_time.id == 1
-				else
-					event_create( @medication, date, 1 ) unless @medication.medication_time.id == 1
-				end
+				event_create( @requester, @medication, date ) unless @medication.medication_time.id == 1
 			end
 		end
 		redirect_to requester_medications_path( @requester )
@@ -32,11 +28,7 @@ class MedicationsController < ApplicationController
 		date = Time.now.to_date
 		@medication = Medication.find( params[:id] )
 		@medication.destroy
-		if date.to_date.wday != 0
-			remove_demand( @requester, @medication, date, 0 )
-		else
-			remove_demand( @requester, @medication, date, 1 )
-		end
+		remove_demand( @requester, @medication, date )
 		redirect_to requester_medications_path( @requester )
 	end
 
@@ -50,11 +42,11 @@ class MedicationsController < ApplicationController
 		params.require(:medication).permit(:requester_id, :description, :picture, :time_id)
 	end
 
-	def event_create( medication, date, start )
+	def event_create( requester, medication, date )
 
-		i = start
-		until (date + i.days).wday == 0
-			schedule = Schedule.find_by( scheduled_date: (date + i.days).to_date )
+		i = 0
+		while requester.schedules.find_by( scheduled_date: (date + i.days).to_date ).present?
+			schedule = requester.schedules.find_by( scheduled_date: (date + i.days).to_date )
 			if schedule.present?
 				t = TimeZone.find_by_zone( medication.medication_time.take_time )
 				event = schedule.events.find_by( time_zone_id: t.id )
@@ -78,10 +70,10 @@ class MedicationsController < ApplicationController
 		
 	end
 
-	def remove_demand( requester, medication, date, start )
+	def remove_demand( requester, medication, date )
 
-		i = start
-		until (date + i.days).wday == 0
+		i = 0
+		while requester.schedules.find_by( scheduled_date: (date + i.days).to_date ).present?
 			schedule = requester.schedules.find_by( scheduled_date: (date + i.days).to_date )
 			t = TimeZone.find_by_zone( medication.medication_time.take_time )
 			event = schedule.events.find_by( time_zone_id: t.id )
