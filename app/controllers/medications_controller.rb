@@ -17,11 +17,8 @@ class MedicationsController < ApplicationController
 				flash[:alert] = "重複上傳，如有錯誤請刪除檔案後再重新上傳"
 			else
 				@medication.requester = @requester
-				@medication.save
-				if date.to_date.wday != 0
-					event_create( @medication, date, 0 ) unless @medication.medication_time.id == 1
-				else
-					event_create( @medication, date, 1 ) unless @medication.medication_time.id == 1
+				if @medication.save
+					@medication.event_create( date ) if @medication.medication_time.id != 1 && @medication.medication_time.id != 9
 				end
 			end
 		end
@@ -32,11 +29,7 @@ class MedicationsController < ApplicationController
 		date = Time.now.to_date
 		@medication = Medication.find( params[:id] )
 		@medication.destroy
-		if date.to_date.wday != 0
-			remove_demand( @requester, @medication, date, 0 )
-		else
-			remove_demand( @requester, @medication, date, 1 )
-		end
+		remove_demand( @requester, @medication, date ) if @medication.medication_time.id != 1 && @medication.medication_time.id != 9
 		redirect_to requester_medications_path( @requester )
 	end
 
@@ -50,38 +43,10 @@ class MedicationsController < ApplicationController
 		params.require(:medication).permit(:requester_id, :description, :picture, :time_id)
 	end
 
-	def event_create( medication, date, start )
+	def remove_demand( requester, medication, date )
 
-		i = start
-		until (date + i.days).wday == 0
-			schedule = Schedule.find_by( scheduled_date: (date + i.days).to_date )
-			if schedule.present?
-				t = TimeZone.find_by_zone( medication.medication_time.take_time )
-				event = schedule.events.find_by( time_zone_id: t.id )
-				if event.present?
-					event.demands << Demand.find_by(demand_name: medication.medication_time.name)
-					event.time_zone = TimeZone.find_by_zone( medication.medication_time.take_time )
-				else
-					event = schedule.events.create unless medication.medication_time.id == 1
-					event.demands << Demand.find_by(demand_name: medication.medication_time.name)
-					event.time_zone = TimeZone.find_by_zone( medication.medication_time.take_time )
-				end
-			else
-				schedule = Schedule.create( scheduled_date: (date + i.days).to_date )
-				event = schedule.events.create unless medication.medication_time.id == 1
-				event.demands << Demand.find_by(demand_name: medication.medication_time.name)
-				event.time_zone = TimeZone.find_by_zone( medication.medication_time.take_time )
-			end
-			event.save
-			i += 1
-		end
-		
-	end
-
-	def remove_demand( requester, medication, date, start )
-
-		i = start
-		until (date + i.days).wday == 0
+		i = 0
+		while requester.schedules.find_by( scheduled_date: (date + i.days).to_date ).present?
 			schedule = requester.schedules.find_by( scheduled_date: (date + i.days).to_date )
 			t = TimeZone.find_by_zone( medication.medication_time.take_time )
 			event = schedule.events.find_by( time_zone_id: t.id )

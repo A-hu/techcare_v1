@@ -26,8 +26,13 @@ class ApiV1::ItemsController < ApiController
 			 else
 				 render json: { status: "400", message: "Fail", scheduled_date: schedule.scheduled_date, fails: "Duplicate #{ has_fails }" }, status: 400
 			 end
-		elsif
+		else
 			 schedule = current_user.caregiver.schedules.create( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
+			 if schedule.requester.medications.present?
+			 		schedule.requester.medications.each do |med|
+			 			med.event_create( schedule.scheduled_date.to_date ) if med.medication_time.id != 1 && med.medication_time.id != 9
+			 	  end
+			 end
 			 has_fails = create_event( schedule, params[:items_data] )
 			 render json: { status: "200", message: "schedule created" }, status: 200
 		end
