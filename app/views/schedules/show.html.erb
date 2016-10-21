@@ -89,7 +89,7 @@
 			  	<%#= select_tag "confirmed", options_for_select( "y", "n"),:class => "form-control" %>
 				<% else %>
 					<div class="form-group">  
-			  	<%= select_tag s.id,options_for_select([['同意',true],['不同意',false]],s.id),:class => "form-control"  %>
+			  	<%= select_tag s.id,options_for_select([['未確認',nil],['同意',true],['不同意',false]],s.id),:class => "form-control"  %>
 			  	</div>
 			  <% end %>	
 			
