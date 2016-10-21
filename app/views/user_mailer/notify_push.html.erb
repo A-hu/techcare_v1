@@ -9,7 +9,7 @@
   <% if @demand_ids.include?(21) || @demand_ids.include?(22) %>
   	<%= health_record_url(@user.requester, auth_token: @user.authentication_token) %>
   <% else %>
-  	<%= schedules_url(auth_token: @user.authentication_token) %>
+  	<%= schedule_url(@user.requester.caregivers.first,auth_token: @user.authentication_token) %>
   <% end %>
   <br>
   您的照顧者: <%= @event.schedule.caregiver.user.last_name + @event.schedule.caregiver.user.first_name %>
