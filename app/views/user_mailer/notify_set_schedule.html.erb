@@ -4,7 +4,8 @@
 	<p>
 	  Hi <%=@user.first_name %>,
 	  <br>
-	  請設定下週行程 <%= root_url %>
+	  請設定下週行程 
+	  <%#= link_to "行程", schedules_url %>
 	</p>
 <% else %>
 	<h1>Notify Confirming Schedule</h1>
@@ -12,9 +13,14 @@
 	<p>
 	  Hi <%=@user.first_name %>,
 	  <br>
-	  請確認下週行程 <%= root_url %>
+	  請確認下週行程 
+	  <%= link_to "確認行程", schedule_url(@user.requester.caregivers.first) %>
 	</p>
 
 <% end %>
 
-<%= link_to "行程確認" , schedules_url %>
+
+
+
+
+	

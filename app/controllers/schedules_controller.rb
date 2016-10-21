@@ -9,7 +9,7 @@ class SchedulesController < ApplicationController
 			@target = current_user.requester
 			@related_users = @target.caregivers.uniq
 		end	
-			@schedules = @target.schedules.where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
+			@schedules = @target.schedules.where(["scheduled_date>=?", Time.now.to_date]).where(["scheduled_date<?",Time.now + 6.days])
 			@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 			@timezones = TimeZone.find(@schedules.includes(:events).pluck(:time_zone_id).uniq)
 	end
@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
 			else	
 				@related_user = Requester.find(params[:id])
 			end
-			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
+			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date >=?", Time.now.to_date]).where(["scheduled_date <?",Time.now + 6.days])
 		else
 			@target	= current_user.requester
 			if params[:related_id]
@@ -29,7 +29,7 @@ class SchedulesController < ApplicationController
 			else
 				@related_user = Caregiver.find(params[:id])
 			end	
-			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
+			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date >=?", Time.now.to_date]).where(["scheduled_date <?",Time.now + 6.days])
 		end
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 		@schedule_ids = @schedules.pluck(:id).uniq
