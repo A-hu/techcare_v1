@@ -5,12 +5,12 @@ class ApiV1::ItemsController < ApiController
 	def show
 
 		if schedule = current_user.caregiver.schedules.find_by( scheduled_date: params[:care_date].to_date, requester_id: params[:requester_id] )
-			@events = schedule.events
+			@events = schedule.events.order(time_zone_id: :ASC)
 		elsif params[:requester_id] == ""
 			schedules = current_user.caregiver.schedules.where( scheduled_date: params[:care_date].to_date )
-			@events = schedules.map{ |s| s.events }.flatten
+			@events = schedules.map{ |s| s.events }.flatten.sort_by(&:time_zone_id)
 		else
-			render json: { message: "Fail" }, status: 400
+			render json: { status: "200", message: "No data" }
 		end
 
 	end
