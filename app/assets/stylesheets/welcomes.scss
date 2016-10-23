@@ -10,6 +10,16 @@
   background-position:center bottom;
 }
 
+#banner.open{
+  opacity:.50;
+}
+.login{
+  display:none;
+}
+.login.open{
+  display:block;
+}
+
 #banner .container{
 	position: relative;
 	top: 30%;
