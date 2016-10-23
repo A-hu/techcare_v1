@@ -59,7 +59,7 @@ namespace :demo do
 							}
 
 		j = 0
-		30.times {
+		40.times {
 							s1 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r1.id)
 								m1 = s1.events.new
 								m1.demands << Demand.find(25)
@@ -102,7 +102,11 @@ namespace :demo do
 								e3.save
 
 								e4 = s1.events.new
-								e4.demands << Demand.find( [23, 24].sample )
+								if s1.scheduled_date.wday == 2 || s1.scheduled_date.wday == 5
+									 e4.demands << Demand.find(23)
+								else
+									 e4.demands << Demand.find(24)
+								end
 								e4.time_zone = TimeZone.find(33)
 								e4.caregiver_confirm = true
 								e4.requester_confirm = true
@@ -144,8 +148,8 @@ namespace :demo do
 								e6.save
 							j += 1
 							}
-							k = 0
-							30.times {
+		k = 1
+		30.times {
 								s1 = c1.schedules.find_by(scheduled_date: Time.now.days_ago(k).to_date, requester_id: r1.id)
 								h = HealthRecord.new
 								h.caregiver = c1
