@@ -35,18 +35,24 @@ table {
 .middle.col-md-2{
 	h2{
 		position: absolute;
-		top: -15px;
+		top: -10px;
     left: 10px;
     font-weight: bold;
     color: #57D1C2;
 	}
+	h4{
+		position: absolute;
+		top: -20px;
+    left: 15px;
+    color: #27496F;
+	}
 }
 .middle.col-md-1{
-	h4{
+	h5{
 		margin-left: -25px;
 		position: absolute;
 		top: -10px;
-    
+    font-weight: bold;
 	}
 }
 #logo img{
