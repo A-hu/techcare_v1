@@ -4,6 +4,11 @@
 <h4>居家服務員：<%= @requester.caregivers.first.user.full_name %></h4>
 
 <div class="schedule" style="background-color:#F9FAFA; padding: 40px" >
+	<div class="status pull-right" style="margin-bottom:10px;">
+		服務狀態：
+		<%= image_tag("icon_done.png") %> 
+		已完成
+	</div>
 <table class="table table-bordered text-center" style="border:2px #000 solid;" >	
 <tr style="background-color:#F8F7E5 " >
 	<th width=10% class= "text-center">時間</th>
@@ -50,15 +55,18 @@
 				<%# else %>
 					<%#= e.schedule.requester.user.first_name	 %>
 				<%# end %>
-					<%= e.demands.first.demand_name %>
+				<div class="status">
 					<% if e.complete_time == nil %>
-						(未完成)
+						<%#= image_tag("icon_undone.png") %>
 					<% else %>
-						(已完成)
+						<%= image_tag("icon_done.png") %>
 					<% end %>
-					<%# e.try(:demands).try(:each) do |d| %>
-						<%#= d.demand_name %><br>
-					<%# end %>		
+					<%#= e.demands.first.demand_name %>
+					<% e.try(:demands).try(:each) do |d| %>
+						<%= d.demand_name %><br>
+					<% end %>
+				</div>	
+							
 				<% end %>	
 			<% end %>
 			</td>
