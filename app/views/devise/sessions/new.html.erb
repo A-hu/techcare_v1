@@ -1,28 +1,18 @@
-<h2>Log in</h2>
+<div class="login-container">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field form-group">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, :class => "form-control" %>
-  </div>
+    <nav class="navbar">
+      <div class="login-logo" style="width:300px;margin: 20px auto;">
+        <div id="logo" class="pull-left">
+          <%= image_tag("logo_v3.png") %>
+        </div>
+        <div class="logo-text pull-left" style="color: #57D1C2;margin-left:5px;margin-top:-10px;">
+          <h2>長照守護家</h2>
+        </div>
+      </div>
+    </nav>  
 
-  <div class="field form-group">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <div>
+       <%= render :partial => 'form' %>
     </div>
-  <% end -%>
 
-  <div class="actions form-group">
-    <%= f.submit "Log in",:class => "btn btn-primary" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
-
-
+</div>

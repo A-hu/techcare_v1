@@ -1,0 +1,45 @@
+<div class="login-container">
+<!-- <h2>Log in</h2> -->
+<div class="login-form">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="field form-group">
+      <%#= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, :class => "form-control",:placeholder => "電子郵件地址",:style => "border:2px #57D1C2 solid" %>
+    </div>
+
+    <div class="field form-group">
+      <%#= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "off", :class => "form-control",:placeholder => "密碼",:style => "border:2px #57D1C2 solid" %>
+    </div>
+
+    <div class="row"  style = "margin-top: 10px;margin-bottom: 10px;">
+      <% if devise_mapping.rememberable? -%>
+        <div class="field col-md-3"  style = "color: #4A4A4A;">
+          <%= f.check_box :remember_me %>
+          <%= f.label :記住我 %>       
+        </div>
+        <div class="col-md-6"></div>
+      <% end -%>
+      <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <div class="field col-md-3">
+         <%= link_to "忘記密碼", new_password_path(resource_name) ,:style => "color: #31A5AF; margin-left:20px;" %><br />
+        </div> 
+      <% end -%>
+    </div>
+
+    <div class="actions form-group">
+      <%= f.submit "登入",:class => "btn login", :style => "background-color:#FDA5BB;"  %>
+    </div>
+  <% end %>
+  <div style = "color: #31A5AF">
+  還沒有帳號？
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to "註冊 ", new_registration_path(resource_name) ,:class => "sign-up btn pull-right", :style => "margin-bottom: 10px; font-size:12px;" %><br />
+  <% end -%>
+  <div>
+
+
+<%#= render "devise/shared/links" %>
+</div>
+
+</div>
