@@ -4,7 +4,7 @@ class MedicationsController < ApplicationController
 
 	def index
 		@medication  = Medication.new
-		@medications = @requester.medications.all
+		@medications = @requester.medications.all.order(time_id: :ASC)
 	end
 
 	def create
