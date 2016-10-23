@@ -61,13 +61,14 @@
 					<% else %>
 						<%= image_tag("icon_done.png") %>
 					<% end %>
-					<%= e.demands.first.demand_name %>
+					<%#= e.demands.first.demand_name %>
+					<% e.try(:demands).try(:each) do |d| %>
+						<%= d.demand_name %><br>
+					<% end %>	
 				</div>	
 					
 					
-					<%# e.try(:demands).try(:each) do |d| %>
-						<%#= d.demand_name %><br>
-					<%# end %>		
+						
 				<% end %>	
 			<% end %>
 			</td>
