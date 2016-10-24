@@ -62,7 +62,6 @@ class ApiV1::ItemsController < ApiController
 					 		return render json: { status: "400", message: "You do not enter the value of blood_sugar" }, status: 400
 					 	end
 				 end
-				 		
 			   event.update( complete_time: data["complete_time"] )
 		  		if event.push == true
 				 	  UserMailer.notify_push( event.schedule.requester.user, event, data["complete_time"].to_date ).deliver_now!  
