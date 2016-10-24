@@ -65,7 +65,7 @@ class ApiV1::ItemsController < ApiController
 				 		
 			   event.update( complete_time: data["complete_time"] )
 		  		if event.push == true
-				 	  UserMailer.notify_push(event.schedule.requester.user, event, params[:care_date].to_date ).deliver_now!  
+				 	  UserMailer.notify_push( event.schedule.requester.user, event, data["complete_time"].to_date ).deliver_now!  
 				    render json: { status: "200", message: "已寄信通知家屬事項完成" }, status: 200
 	  			else
 						render json: { status: "200", message: "事項完成" }, status: 200
