@@ -59,7 +59,7 @@ class Requester < ApplicationRecord
 	def rec_day
 		arr = []
 		self.health_records.each do |h|
-			arr << h.record_day
+			arr << h.record_day if h.blood_sugar.present?
 		end
 		return arr
 	end
