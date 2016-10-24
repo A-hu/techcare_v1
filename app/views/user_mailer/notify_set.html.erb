@@ -1,0 +1,9 @@
+<h1>居服員已設定完排程，請確認</h1>
+
+<p>
+  <%= @requester.user.first_name %> 先生/小姐, 您好
+  <br>
+  您的居服員<%= @schedule.caregiver.user.last_name + @schedule.caregiver.user.first_name %>已設定完成<%= @schedule.scheduled_date %>的排程
+  <br>
+  請確認<%= schedule_url(@schedule.caregiver) %>
+</p>

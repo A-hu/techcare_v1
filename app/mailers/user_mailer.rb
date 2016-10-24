@@ -21,6 +21,12 @@ class UserMailer < ApplicationMailer
       mail(:to => user.email, :subject => "#{@demands}已完成")
   end
 
+  def notify_set(requester, care_date)
+    @requester = requester
+    @schedule = Schedule.find_by(requester_id: requester.id, scheduled_date: care_date)
+    mail(:to => requester.user.email, :subject => "請確認排程")
+  end
+
   def notify_set_schedule(user)
     @user = user
     if @user.caregiver
