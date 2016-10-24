@@ -60,7 +60,7 @@ namespace :demo do
 
 		j = 0
 		40.times {
-							s1 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r1.id)
+							s1 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r1.id, requester_confirm: true)
 								m1 = s1.events.new
 								m1.demands << Demand.find(25)
 								m1.time_zone = TimeZone.find(15)
@@ -138,7 +138,7 @@ namespace :demo do
 								m4.complete_time = "done"
 								m4.save
 
-							s2 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r2.id)
+							s2 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r2.id, requester_confirm: true)
 								e6 = s2.events.new
 								e6.demands << Demand.find( [3, 4].sample )
 								e6.time_zone = TimeZone.find(42)

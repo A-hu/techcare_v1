@@ -77,7 +77,7 @@ namespace :init do
 			d2.demands.create(demand_name: "拍背")
 		d3 = DemandCategory.create(name: "家務服務")
 			d3.demands.create(demand_name: "洗衣")
-			d3.demands.create(demand_name: "服務對象起居環境清潔")
+			d3.demands.create(demand_name: "起居環境清潔")
 			d3.demands.create(demand_name: "陪同或代理購物")
 			d3.demands.create(demand_name: "備餐(購買)")
 			d3.demands.create(demand_name: "備餐(煮食)")
