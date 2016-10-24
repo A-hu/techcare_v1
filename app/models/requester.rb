@@ -23,7 +23,7 @@ class Requester < ApplicationRecord
 	def systolic
 		arr = []
 		self.health_records.each do |h|
-			arr << h.systolic_record
+			arr << h.systolic_record if h.systolic_record.present?
 		end
 		# arr.unshift("systolic")
 		return arr
@@ -32,7 +32,7 @@ class Requester < ApplicationRecord
 	def diastolic
 		arr = []
 		self.health_records.each do |h|
-			arr << h.diastolic_record
+			arr << h.diastolic_record if h.diastolic_record.present?
 		end
 		# arr.unshift("diastolic")
 		return arr
@@ -41,7 +41,16 @@ class Requester < ApplicationRecord
 	def heart_rates
 		arr = []
 		self.health_records.each do |h|
-			arr << h.heart_rate
+			arr << h.heart_rate if h.heart_rate.present?
+		end
+		# arr.unshift("diastolic")
+		return arr
+	end
+
+	def blood_sugars
+		arr = []
+		self.health_records.each do |h|
+			arr << h.blood_sugar if h.blood_sugar.present?
 		end
 		# arr.unshift("diastolic")
 		return arr

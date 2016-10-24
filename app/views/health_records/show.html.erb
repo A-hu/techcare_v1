@@ -37,6 +37,14 @@
 	</div>
 </div>
 
+<div class="panel panel-default">
+	<div class="panel-heading"  style="background-color:#F9FAFA;">
+		<h3 class="text-center">血糖</h3>
+		<div id="chart3">
+		</div>
+	</div>
+</div>
+
 <script>
 	var arr1= <%= @requester.systolic %>
 	arr1.unshift("systolic")
@@ -96,6 +104,34 @@
 	        }
 	    }
 	});
+
+var arr5= <%= @requester.blood_sugars %>
+	arr5.unshift("blood sugar")
+	var chart = c3.generate({
+	    bindto: '#chart3',
+	    data: {
+	    	x: 'x',
+	      columns: [
+	      arr3, 
+	      arr5
+	      ],
+	      onclick: function (d, i) { 
+	      	date = new Date(d.x);
+	      	var newDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()
+	      	console.log(newDate)
+	    		window.location.href = "/schedules"+ "/<%= @requester.id %>/"+newDate
+	      },
+	    },
+	    axis: {
+	        x: {
+	            type: 'timeseries',
+	            tick: {
+	                format: '%Y-%m-%d'
+	            }
+	        }
+	    }
+	});
+
 
 
 </script>
