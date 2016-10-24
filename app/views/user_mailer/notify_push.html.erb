@@ -5,14 +5,23 @@
   <br>
   您的家屬已完成<%= @demands %>
   <br>
-  詳盡流程請點：
-  <% if @demand_ids.include?(21) || @demand_ids.include?(22) %>
-  	<%= health_record_url(@user.requester, auth_token: @user.authentication_token) %>
+  詳盡流程請點：<br>
+  <% if @demand_ids.include?(21) %>
+    收縮壓：<%= @health_record.systolic_record%>
+    <br>
+    舒張壓：<%= @health_record.diastolic_record%>
+    <br>
+    心跳： <%= @health_record.heart_rate%>
+    <br>
+  	<%= health_record_url(@user.requester) %>
+  <% elsif @demand_ids.include?(22) %>
+    血糖：<%= @health_record.blood_sugar%>
+    <%= health_record_url(@user.requester) %>
   <% else %>
-  	<%= schedule_url(@user.requester.caregivers.first,auth_token: @user.authentication_token) %>
+  	<%= schedule_url(@event.schedule.caregiver) %>
   <% end %>
   <br>
   您的照顧者: <%= @event.schedule.caregiver.user.last_name + @event.schedule.caregiver.user.first_name %>
   <br>
-  已於<%= @event.complete_time %>完成您勾選的重要項目
+  已於<%= @event.complete_time %>完成
 </p>

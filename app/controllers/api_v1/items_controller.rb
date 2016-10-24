@@ -22,6 +22,7 @@ class ApiV1::ItemsController < ApiController
 		if schedule.present?
 			 has_fails = create_event( schedule, params[:items_data] )
 			 if has_fails == []
+			 	 UserMailer.notify_set( schedule.requester, params[:care_date].to_date ).deliver_now!
 				 render json: { status: "200", message: "schedule updated" }, status: 200
 			 else
 				 render json: { status: "400", message: "Fail", scheduled_date: schedule.scheduled_date, fails: "Duplicate #{ has_fails }" }, status: 400
@@ -33,7 +34,8 @@ class ApiV1::ItemsController < ApiController
 			 			med.event_create( schedule.scheduled_date.to_date ) if med.medication_time.id != 1 && med.medication_time.id != 9
 			 	  end
 			 end
-			 has_fails = create_event( schedule, params[:items_data] )
+			 create_event( schedule, params[:items_data] )
+			 UserMailer.notify_set( schedule.requester, params[:care_date].to_date ).deliver_now!
 			 render json: { status: "200", message: "schedule created" }, status: 200
 		end
 
@@ -63,7 +65,7 @@ class ApiV1::ItemsController < ApiController
 				 		
 			   event.update( complete_time: data["complete_time"] )
 		  		if event.push == true
-				 	  UserMailer.notify_push(event.schedule.requester.user, event).deliver_now!  
+				 	  UserMailer.notify_push(event.schedule.requester.user, event, params[:care_date].to_date ).deliver_now!  
 				    render json: { status: "200", message: "已寄信通知家屬事項完成" }, status: 200
 	  			else
 						render json: { status: "200", message: "事項完成" }, status: 200
