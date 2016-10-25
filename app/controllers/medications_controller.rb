@@ -18,6 +18,7 @@ class MedicationsController < ApplicationController
 			else
 				@medication.requester = @requester
 				if @medication.save
+					flash[:notice] = "上傳成功"
 					@medication.event_create( date ) if @medication.medication_time.id != 1 && @medication.medication_time.id != 9
 				end
 			end

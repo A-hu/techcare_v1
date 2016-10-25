@@ -45,9 +45,9 @@
 	<% if @timezones.include?(t) %>
 	<tr>
 		<td style="background-color:#F8F7E5 ;border-right:3px #7F7F7F solid;"><%= t.to_time  %></td>
-		<% @schedule_dates.each do |d| %> 
+		<% @schedule_dates.each do |date| %> 
 			<td style="font-weight:bold" >
-			<% @schedules.where(:scheduled_date => d).each do |s| %>
+			<% @schedules.where(:scheduled_date => date).each do |s| %>
 				<% Event.where(:schedule => s, :time_zone => t).each do |e| %>
 
 				<%# if current_user.requester %>
@@ -63,7 +63,22 @@
 					<% end %>
 					<%#= e.demands.first.demand_name %>
 					<% e.try(:demands).try(:each) do |d| %>
-						<%= d.demand_name %><br>
+						<%= d.demand_name %>
+						<% if d.id == 21 && e.complete_time != nil %>
+							<% if @requester.health_records.where(:record_day => date).where.not(:heart_rate => nil).first.try(:systolic_record) >140 || @requester.health_records.where(:record_day => date).where.not(:heart_rate => nil).first.try(:diastolic_record) <90 %>
+							<%#= @target.health_records.where(:record_day => date).where.not(:heart_rate => nil).first.try(:heart_rate) %>
+								<%= image_tag("icon_sad.png") %>
+							<% else	%>
+								<%= image_tag("icon_smile.png") %>
+							<% end %>
+						<% end %>
+						<% if d.id == 22 && e.complete_time != nil %>
+							<% if @requester.health_records.where(:record_day => date).where(:heart_rate => nil).first.try(:blood_sugar) >140 %>
+								<%= image_tag("icon_sad.png") %>
+							<% else %>
+								<%= image_tag("icon_smile.png") %>
+							<% end %>	
+						<% end %>
 					<% end %>
 				</div>	
 							
