@@ -12,41 +12,41 @@ namespace :demo do
 
 		i = 0
 		10.times {
-							s1 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r1.id)
-								e1 = s1.events.new
-								e1.demands << Demand.find( [12, 13].sample )
-								e1.time_zone = TimeZone.find(21)
-								e1.caregiver_confirm = true
-								e1.requester_confirm = true
-								e1.save
+							# s1 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r1.id)
+							# 	e1 = s1.events.new
+							# 	e1.demands << Demand.find( [12, 13].sample )
+							# 	e1.time_zone = TimeZone.find(21)
+							# 	e1.caregiver_confirm = true
+							# 	e1.requester_confirm = true
+							# 	e1.save
 
-								e2 = s1.events.new
-								e2.demands << Demand.find(7)
-								e2.time_zone = TimeZone.find(25)
-								e2.caregiver_confirm = true
-								e2.requester_confirm = true
-								e2.save
+							# 	e2 = s1.events.new
+							# 	e2.demands << Demand.find(7)
+							# 	e2.time_zone = TimeZone.find(25)
+							# 	e2.caregiver_confirm = true
+							# 	e2.requester_confirm = true
+							# 	e2.save
 
-								e3 = s1.events.new
-								e3.demands << Demand.find(22)
-								e3.time_zone = TimeZone.find(31)
-								e3.caregiver_confirm = true
-								e3.requester_confirm = true
-								e3.save
+							# 	e3 = s1.events.new
+							# 	e3.demands << Demand.find(22)
+							# 	e3.time_zone = TimeZone.find(31)
+							# 	e3.caregiver_confirm = true
+							# 	e3.requester_confirm = true
+							# 	e3.save
 
-								e4 = s1.events.new
-								e4.demands << Demand.find( [23, 24].sample )
-								e4.time_zone = TimeZone.find(33)
-								e4.caregiver_confirm = true
-								e4.requester_confirm = true
-								e4.save
+							# 	e4 = s1.events.new
+							# 	e4.demands << Demand.find( [23, 24].sample )
+							# 	e4.time_zone = TimeZone.find(33)
+							# 	e4.caregiver_confirm = true
+							# 	e4.requester_confirm = true
+							# 	e4.save
 
-								e5 = s1.events.new
-								e5.demands << Demand.find(21)
-								e5.time_zone = TimeZone.find(35)
-								e5.caregiver_confirm = true
-								e5.requester_confirm = true
-								e5.save
+							# 	e5 = s1.events.new
+							# 	e5.demands << Demand.find(21)
+							# 	e5.time_zone = TimeZone.find(35)
+							# 	e5.caregiver_confirm = true
+							# 	e5.requester_confirm = true
+							# 	e5.save
 
 							s2 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r2.id)
 								e6 = s2.events.new
