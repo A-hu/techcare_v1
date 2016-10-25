@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
 	def new
 		@comment = Comment.new
-		@schedules = Schedule.where(["scheduled_date>?", Time.now]).where(["scheduled_date<?",Time.now + 7.days])
+		@schedules = Schedule.where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 2.days])
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 	end
 
@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
 	
 		if @comment.save
 			UserMailer.notify_comment(receiver.user, @comment).deliver_now!
+			flash[:notice]="發送成功"
 			redirect_to schedule_path(current_user,:related_id=>receiver.id)
 		else
 			render :action => :new

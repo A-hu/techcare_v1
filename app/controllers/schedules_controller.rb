@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
 			else	
 				@related_user = Requester.find(params[:id])
 			end
-			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 4.days]).order("scheduled_date Asc")
+			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 2.days]).order("scheduled_date Asc")
 		else
 			@target	= current_user.requester
 			if params[:related_id]
@@ -29,7 +29,7 @@ class SchedulesController < ApplicationController
 			else
 				@related_user = Caregiver.find(params[:id])
 			end	
-			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 4.days]).order("scheduled_date Asc")
+			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 2.days]).order("scheduled_date Asc")
 		end
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 		@schedule_ids = @schedules.pluck(:id).uniq
@@ -62,7 +62,7 @@ class SchedulesController < ApplicationController
 	def recent_days
 		@requester = Requester.find(params[:requester_id])
 		# @caregiver = current_user.caregiver
-		daysago =params[:date].to_date - 7.days
+		daysago =params[:date].to_date - 5.days
 		@schedules = @requester.schedules.where(["scheduled_date<=?", params[:date].to_date]).where(["scheduled_date>?",daysago]).order("scheduled_date Asc")
 		# @schedules = @caregiver.schedules.where(:requester => @requester).where(["scheduled_date<=?", params[:date].to_date]).where(["scheduled_date>?",daysago]).order("scheduled_date Asc")
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
