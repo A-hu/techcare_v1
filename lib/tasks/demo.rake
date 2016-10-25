@@ -12,7 +12,7 @@ namespace :demo do
 
 		i = 0
 		10.times {
-							# s1 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r1.id)
+							s1 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r1.id)
 							# 	e1 = s1.events.new
 							# 	e1.demands << Demand.find( [12, 13].sample )
 							# 	e1.time_zone = TimeZone.find(21)
@@ -148,7 +148,7 @@ namespace :demo do
 								e6.save
 							j += 1
 							}
-		k = 1
+		k = 0
 		35.times {
 								s1 = c1.schedules.find_by(scheduled_date: Time.now.days_ago(k).to_date, requester_id: r1.id)
 								h = HealthRecord.new
@@ -163,7 +163,7 @@ namespace :demo do
 								end	
 								k += 1
 							}
-		l = 1
+		l = 0
 		35.times {
 								s1 = c1.schedules.find_by(scheduled_date: Time.now.days_ago(l).to_date, requester_id: r1.id)
 								h = HealthRecord.new
