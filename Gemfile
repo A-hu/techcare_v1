@@ -12,6 +12,7 @@ gem "paperclip"
 gem "rails-i18n"
 gem "letter_opener", :group => :development
 gem 'whenever', :require => false
+gem 'toastr-rails'
 
 gem 'ruby-graphviz'
 gem "rails-erd"
