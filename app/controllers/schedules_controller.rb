@@ -34,7 +34,6 @@ class SchedulesController < ApplicationController
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 		@schedule_ids = @schedules.pluck(:id).uniq
 		@timezones = TimeZone.find(@schedules.includes(:events).pluck(:time_zone_id).uniq)
-
 		# no use:
 		# @schedules = @requester.caregivers.where(:user => current_user).uniq.first.schedules
 		# @schedules = Schedule.includes(:events).where(:requester_id => @requester_id)

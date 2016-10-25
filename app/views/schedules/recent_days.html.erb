@@ -64,8 +64,8 @@
 					<%#= e.demands.first.demand_name %>
 					<% e.try(:demands).try(:each) do |d| %>
 						<%= d.demand_name %>
-						<% if d.id == 21 && e.complete_time != nil %>
-							<% if @requester.health_records.where(:record_day => date).where.not(:heart_rate => nil).first.try(:systolic_record) >140 || @requester.health_records.where(:record_day => date).where.not(:heart_rate => nil).first.try(:diastolic_record) <90 %>
+						<% if d.id == 21 && e.complete_time != nil && @requester.health_records.find_by(:record_day => date, :blood_sugar => nil).present? %>
+							<% if @requester.health_records.find_by(:record_day => date, :blood_sugar => nil).try(:systolic_record) >= 140 || @requester.health_records.find_by(:record_day => date, :blood_sugar => nil).try(:diastolic_record) >= 100 %>
 							<%#= @target.health_records.where(:record_day => date).where.not(:heart_rate => nil).first.try(:heart_rate) %>
 								<%= image_tag("icon_sad.png") %>
 							<% else	%>
@@ -73,7 +73,7 @@
 							<% end %>
 						<% end %>
 						<% if d.id == 22 && e.complete_time != nil %>
-							<% if @requester.health_records.where(:record_day => date).where(:heart_rate => nil).first.try(:blood_sugar) >140 %>
+							<% if @requester.health_records.find_by(:record_day => date, :heart_rate => nil).try(:blood_sugar) >=140 %>
 								<%= image_tag("icon_sad.png") %>
 							<% else %>
 								<%= image_tag("icon_smile.png") %>
