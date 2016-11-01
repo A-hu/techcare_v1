@@ -1,6 +1,6 @@
 class Medication < ApplicationRecord
 	
-	scope :new_medication, ->(last_time) { where( "updated_at = ?", last_time ) }
+	# scope :new_medication, ->(last_time) { where( "updated_at = ?", last_time ) }
 
 	belongs_to :requester
 	belongs_to :medication_time, foreign_key: :time_id
@@ -9,6 +9,9 @@ class Medication < ApplicationRecord
 	validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
 
 	def event_create( date )
+		# self.requester.schedules.where("scheduled_date >= ?", date).each do |schedule|
+		# 	schedule 
+		# end
 
 		i = 0
 		while self.requester.schedules.find_by( scheduled_date: (date + i.days).to_date ).present?

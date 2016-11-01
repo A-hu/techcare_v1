@@ -21,12 +21,7 @@ class Requester < ApplicationRecord
 	has_many :health_records, dependent: :destroy
 
 	def systolic
-		arr = []
-		self.health_records.each do |h|
-			arr << h.systolic_record if h.systolic_record.present?
-		end
-		# arr.unshift("systolic")
-		return arr
+		self.health_records.map{ |h| h.systolic_record }.select{ |s| s.present? }
 	end
 
 	def diastolic
@@ -65,7 +60,7 @@ class Requester < ApplicationRecord
 	end
 
 	def self.weekly_notify
-		Requester.all.each do |c|
+		Requester.for_each do |c|
 			UserMailer.notify_set_schedule(c.user).deliver_now!
 		end		
 	end
