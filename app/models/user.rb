@@ -20,8 +20,6 @@ class User < ApplicationRecord
   end
 
   def full_name
-    a=self.last_name
-    b=self.first_name
-    c=a+b
+    "#{last_name}#{first_name}"
   end
 end

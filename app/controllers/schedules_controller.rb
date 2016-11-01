@@ -13,6 +13,8 @@ class SchedulesController < ApplicationController
 			@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 			@timezones = TimeZone.find(@schedules.includes(:events).pluck(:time_zone_id).uniq)
 	end
+
+	# TODO: split two action for requester and caregiver. redirect to different route after login
 	def show
 		if current_user.caregiver
 			@target	= current_user.caregiver
@@ -21,7 +23,7 @@ class SchedulesController < ApplicationController
 			else	
 				@related_user = Requester.find(params[:id])
 			end
-			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 2.days]).order("scheduled_date Asc")
+			@schedules = @target.schedules.where(:requester => @related_user).where(["scheduled_date >=?", Date.today-2.days]).where(["scheduled_date <?",Date.today + 2.days]).order("scheduled_date Asc")
 		else
 			@target	= current_user.requester
 			if params[:related_id]
@@ -29,7 +31,7 @@ class SchedulesController < ApplicationController
 			else
 				@related_user = Caregiver.find(params[:id])
 			end	
-			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 2.days]).order("scheduled_date Asc")
+			@schedules = @target.schedules.where(:caregiver => @related_user).where(["scheduled_date >=?", Date.today-2.days]).where(["scheduled_date <?",Date.today + 2.days]).order("scheduled_date Asc")
 		end
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 		@schedule_ids = @schedules.pluck(:id).uniq

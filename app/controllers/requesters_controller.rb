@@ -14,7 +14,7 @@ class RequestersController < ApplicationController
 	end
 
 	def create
-		@requester = Requester.new ( set_params )
+		@requester = Requester.new( set_params )
 		@requester.user = current_user
 		@requester.save
 		redirect_to schedules_path
@@ -37,6 +37,7 @@ class RequestersController < ApplicationController
 
 	def find_requester
 		@requester = Requester.find(params[:id])
+		# TODO: check you can view @requester 
 	end
 
 	def set_params

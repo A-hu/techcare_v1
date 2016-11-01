@@ -5,12 +5,10 @@ class Caregiver < ApplicationRecord
 	belongs_to :user
 	has_many :schedules, dependent: :destroy
 
-
 	has_many :comments, as: :commentable, dependent: :destroy
 
 	has_many :schedules, dependent: :destroy
 	has_many :scheduled_requesters, through: :schedules, source: :requester, dependent: :destroy
-
 
 	has_many :orders, dependent: :destroy
 	has_many :order_requesters, through: :orders, source: :requester, dependent: :destroy
@@ -19,7 +17,7 @@ class Caregiver < ApplicationRecord
 	has_many :requesters, through: :health_records, dependent: :destroy
 
 	def self.weekly_notify
-		Caregiver.all.each do |c|
+		Caregiver.find_each do |c|
 			UserMailer.notify_set_schedule(c.user).deliver_now!
 		end		
 	end
