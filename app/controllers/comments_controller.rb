@@ -1,9 +1,10 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
+	@@target_date = Date.new(2016,11,25)
 
 	def new
 		@comment = Comment.new
-		@schedules = Schedule.where(["scheduled_date >=?", Time.now.to_date-2.days]).where(["scheduled_date <?",Time.now + 2.days])
+		@schedules = Schedule.where(["scheduled_date >=?", @@target_date.to_date-2.days]).where(["scheduled_date <?",@@target_date + 2.days])
 		@schedule_dates = @schedules.pluck(:scheduled_date).uniq
 	end
 

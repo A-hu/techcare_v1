@@ -10,9 +10,10 @@ namespace :demo do
 		u3 = User.create(first_name: "錦裕", last_name: "李", cell_phone_number: "0978764532", email: "redman@gmail.com", password: "123123", age: 89, gender: "男")
 			r2 = u3.create_requester(address: "新北市永和區", condition_description: "高齡 糖尿病")
 
+		target_date = Date.new(2016,11,25)
 		i = 0
-		10.times {
-							s1 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r1.id)
+		1.times {
+							s1 = c1.schedules.create(scheduled_date: target_date + i.days, requester_id: r1.id)
 								e1 = s1.events.new
 								e1.demands << Demand.find( [12, 13].sample )
 								e1.time_zone = TimeZone.find(21)
@@ -48,7 +49,7 @@ namespace :demo do
 								e5.requester_confirm = true
 								e5.save
 
-							s2 = c1.schedules.create(scheduled_date: i.days.from_now.to_date, requester_id: r2.id)
+							s2 = c1.schedules.create(scheduled_date: target_date + i.days, requester_id: r2.id)
 								e6 = s2.events.new
 								e6.demands << Demand.find( [3, 4].sample )
 								e6.time_zone = TimeZone.find(42)
@@ -60,7 +61,7 @@ namespace :demo do
 
 		j = 0
 		40.times {
-							s1 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r1.id, requester_confirmed: true)
+							s1 = c1.schedules.create(scheduled_date: target_date.days_ago(j).to_date, requester_id: r1.id, requester_confirmed: true)
 								m1 = s1.events.new
 								m1.demands << Demand.find(25)
 								m1.time_zone = TimeZone.find(15)
@@ -138,7 +139,7 @@ namespace :demo do
 								m4.complete_time = "done"
 								m4.save
 
-							s2 = c1.schedules.create(scheduled_date: Time.now.days_ago(j).to_date, requester_id: r2.id, requester_confirmed: true)
+							s2 = c1.schedules.create(scheduled_date: target_date.days_ago(j).to_date, requester_id: r2.id, requester_confirmed: true)
 								e6 = s2.events.new
 								e6.demands << Demand.find( [3, 4].sample )
 								e6.time_zone = TimeZone.find(42)
@@ -148,42 +149,42 @@ namespace :demo do
 								e6.save
 							j += 1
 							}
-		k = 0
+		k = 1
 		35.times {
-								s1 = c1.schedules.find_by(scheduled_date: Time.now.days_ago(k).to_date, requester_id: r1.id)
+								s1 = c1.schedules.find_by(scheduled_date: target_date.days_ago(k).to_date, requester_id: r1.id)
 								h = HealthRecord.new
 								h.caregiver = c1
 								h.requester = r1
 								if s1.events.map{|e| e.demands}.flatten.include?(Demand.find(23))
-									h.update(systolic_record: rand(140..160), diastolic_record: rand(90..105), heart_rate: rand(75..95), record_day: Time.now.days_ago(k) )	
+									h.update(systolic_record: rand(140..160), diastolic_record: rand(90..105), heart_rate: rand(75..95), record_day: target_date.days_ago(k) )	
 									s1.comments.create(comment_category_id: 1, user_id: u1.id, content: "整體狀況普通，血壓數值偏高")
 								else
-									h.update(systolic_record: rand(120..140), diastolic_record: rand(80..95), heart_rate: rand(65..85), record_day: Time.now.days_ago(k) )	
+									h.update(systolic_record: rand(120..140), diastolic_record: rand(80..95), heart_rate: rand(65..85), record_day: target_date.days_ago(k) )	
 									s1.comments.create(comment_category_id: 1, user_id: u1.id, content: "整體狀況良好")		
 								end	
 								k += 1
 							}
-		l = 0
+		l = 1
 		35.times {
-								s1 = c1.schedules.find_by(scheduled_date: Time.now.days_ago(l).to_date, requester_id: r1.id)
+								s1 = c1.schedules.find_by(scheduled_date: target_date.days_ago(l).to_date, requester_id: r1.id)
 								h = HealthRecord.new
 								h.caregiver = c1
 								h.requester = r1
-								if Time.now.days_ago(l) >= Time.now.days_ago(7)
-									h.update( blood_sugar: rand(145..165),record_day: Time.now.days_ago(l) )	
+								if target_date.days_ago(l) >= target_date.days_ago(7)
+									h.update( blood_sugar: rand(145..165),record_day: target_date.days_ago(l) )	
 									s1.comments.create(comment_category_id: 1, user_id: u1.id, content: "血糖數值偏高")
 								else
-									h.update( blood_sugar: rand(110..135),record_day: Time.now.days_ago(l) )	
+									h.update( blood_sugar: rand(110..135),record_day: target_date.days_ago(l) )	
 								end
-								s2 = c1.schedules.find_by(scheduled_date: Time.now.days_ago(l).to_date, requester_id: r2.id)
+								s2 = c1.schedules.find_by(scheduled_date: target_date.days_ago(l).to_date, requester_id: r2.id)
 								h = HealthRecord.new
 								h.caregiver = c1
 								h.requester = r2
-								if Time.now.days_ago(l) >= Time.now.days_ago(7)
-									h.update( blood_sugar: rand(145..165),record_day: Time.now.days_ago(l) )	
+								if target_date.days_ago(l) >= target_date.days_ago(7)
+									h.update( blood_sugar: rand(145..165),record_day: target_date.days_ago(l) )	
 									s2.comments.create(comment_category_id: 1, user_id: u1.id, content: "血糖數值偏高")
 								else
-									h.update( blood_sugar: rand(110..135),record_day: Time.now.days_ago(l) )	
+									h.update( blood_sugar: rand(110..135),record_day: target_date.days_ago(l) )	
 								end	
 								l += 1
 							}

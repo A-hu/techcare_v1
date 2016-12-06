@@ -1,14 +1,14 @@
 class MedicationsController < ApplicationController
 	
 	before_action :find_requester
-
+	@@target_date = Date.new(2016,11,25)
 	def index
 		@medication  = Medication.new
 		@medications = @requester.medications.all.order(time_id: :ASC)
 	end
 
 	def create
-		date = Time.now.to_date
+		date = @@target_date
 		@medication = Medication.new( set_params )
 		if @medication.picture_content_type.nil?
 			flash[:alert] = "未上傳圖片"
@@ -27,7 +27,7 @@ class MedicationsController < ApplicationController
 	end
 
 	def destroy
-		date = Time.now.to_date
+		date = @@target_date
 		@medication = Medication.find( params[:id] )
 		@medication.destroy
 		remove_demand( @requester, @medication, date ) if @medication.medication_time.id != 1 && @medication.medication_time.id != 9
